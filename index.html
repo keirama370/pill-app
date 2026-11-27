@@ -5,121 +5,149 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="服药记录">
-<meta name="theme-color" content="#2f7d6b">
+<meta name="theme-color" content="#16256a">
 <title>服药记录</title>
 <style>
-:root{--bg:#f6f7f9;--card:#fff;--ink:#1c2430;--mute:#6b7685;--line:#e3e7ec;--accent:#2f7d6b;--warn:#c2410c;--warn-soft:#fff1e6;--ok:#2f7d6b;--info-soft:#e6f0fb;--info:#1d5fa8}
-@media(prefers-color-scheme:dark){:root{--bg:#12161b;--card:#1b2128;--ink:#e8ecf1;--mute:#93a0b0;--line:#2b333c;--accent:#4fb59e;--warn:#fb923c;--warn-soft:#3a2616;--ok:#4fb59e;--info-soft:#17283d;--info:#7fb4f0}}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans SC",sans-serif;padding:calc(14px + env(safe-area-inset-top)) 14px calc(60px + env(safe-area-inset-bottom));max-width:560px;margin:0 auto}
-h1{font-size:20px;margin:6px 0 12px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
-.card h2{font-size:15px;margin:0 0 10px;color:var(--mute);font-weight:600}
-.stats{display:flex;gap:8px;margin-top:10px}
-.stat{flex:1;background:var(--bg);border-radius:10px;padding:8px;text-align:center}
-.stat b{display:block;font-size:20px}
-.stat span{font-size:12px;color:var(--mute)}
-.bar{height:8px;background:var(--line);border-radius:6px;overflow:hidden}
-.bar i{display:block;height:100%;background:var(--accent)}
-.alert{background:var(--warn-soft);color:var(--warn);border-radius:12px;padding:10px 12px;margin-bottom:12px;font-weight:600}
-.info{background:var(--info-soft);color:var(--info);border-radius:12px;padding:10px 12px;margin-bottom:12px;font-weight:600}
-.sync{font-size:12px;color:var(--mute);margin:-4px 0 10px;text-align:right}
-.row{display:flex;align-items:center;gap:8px;padding:10px 0;border-top:1px solid var(--line)}
-.row:first-of-type{border-top:0}
-.row .name{flex:1;min-width:0}
-.row .name small{display:block;color:var(--mute);font-size:12px}
-.row.off{opacity:.55}
-.done{color:var(--ok);font-weight:600}
+:root{--bg:#f3f5f9;--card:#fff;--ink:#1a2233;--mute:#6b7685;--line:#e3e7ee;--accent:#4a6cf7;--accent2:#7c5cff;--warn:#c2410c;--warn-soft:#fff1e6;--ok:#1f9d74;--info-soft:#e8efff;--info:#2f55d4}
+@media(prefers-color-scheme:dark){:root{--bg:#0d1118;--card:#171c26;--ink:#e9edf5;--mute:#98a3b5;--line:#262d3a;--accent:#7b93ff;--accent2:#a48bff;--warn:#fb923c;--warn-soft:#3a2616;--ok:#46d6a4;--info-soft:#18274a;--info:#9db4ff}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans SC",sans-serif;padding:calc(12px + env(safe-area-inset-top)) 14px calc(96px + env(safe-area-inset-bottom));max-width:560px;margin:0 auto}
+h1{font-size:19px;margin:4px 2px 12px;font-weight:700}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:12px}
+.card h2{font-size:14px;margin:0 0 10px;color:var(--mute);font-weight:600;letter-spacing:.3px}
+.alert{background:var(--warn-soft);color:var(--warn);border-radius:14px;padding:10px 12px;margin-bottom:10px;font-weight:600;font-size:14px}
+.info{background:var(--info-soft);color:var(--info);border-radius:14px;padding:10px 12px;margin-bottom:10px;font-weight:600;font-size:14px}
+.sync{font-size:12px;color:var(--mute);margin:-2px 2px 8px;text-align:right}
 input,button,select,textarea{font:inherit;color:inherit}
-input[type=time],input[type=date],input[type=text],input[type=password],select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:7px 8px}
-button{border:0;border-radius:10px;padding:9px 14px;background:var(--accent);color:#fff;font-weight:600;cursor:pointer}
+input[type=time],input[type=date],input[type=text],input[type=password],select{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+button{border:0;border-radius:12px;padding:10px 16px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:600;cursor:pointer}
 button:disabled{opacity:.5}
 button.ghost{background:var(--bg);color:var(--ink);border:1px solid var(--line);font-weight:500}
-button.small{padding:6px 10px;font-size:14px}
-button.big{width:100%;padding:13px;font-size:17px;margin-top:10px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
-.chip{padding:7px 12px;border-radius:20px;border:1px solid var(--line);background:var(--bg);cursor:pointer}
-.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+button.small{padding:7px 12px;font-size:14px;border-radius:10px}
+button.big{width:100%;padding:14px;font-size:17px;margin-top:12px;border-radius:14px}
 .line{display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
 .line label{color:var(--mute);font-size:14px}
+.note{font-size:13px;color:var(--mute)}
+.done{color:var(--ok);font-weight:600}
+.miss{color:var(--warn)}
+textarea{width:100%;height:150px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px;font-size:12px}
+hr.sep{border:0;border-top:1px solid var(--line);margin:14px 0}
+
+/* sky hero */
+.sky{position:relative;border-radius:24px;overflow:hidden;color:#fff;padding:14px 14px 16px;margin-bottom:12px;box-shadow:0 8px 24px rgba(20,30,90,.28)}
+.sky .bgs{position:absolute;border-radius:50%;background:#fff;animation:tw 3.2s ease-in-out infinite}
+.sky>*{position:relative}
+.sky .hrow{display:flex;justify-content:space-between;align-items:center;min-height:30px}
+.chipS{display:inline-block;padding:4px 11px;border-radius:14px;background:rgba(255,255,255,.16);backdrop-filter:blur(4px);font-size:13px}
+.moon{font-size:28px;animation:float 5s ease-in-out infinite}
+.csvg{margin:2px -4px 0}
+.csvg svg{width:100%;height:auto;max-height:190px;display:block;overflow:visible}
+.hcap{display:flex;justify-content:space-between;align-items:baseline;margin-top:2px}
+.hcap b{font-size:17px}
+.hcap span{font-size:13px;opacity:.85}
+.energy{display:flex;gap:6px;margin:10px 0 8px}
+.energy i{flex:1;height:8px;border-radius:6px;background:rgba(255,255,255,.18);overflow:hidden;position:relative}
+.energy i.on{background:var(--star);box-shadow:0 0 10px var(--star)}
+.hmsg{font-size:14px;opacity:.95;line-height:1.5}
+.sky .shoot{position:absolute;width:90px;height:2px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff);border-radius:2px;opacity:0;transform:rotate(-28deg);animation:shoot 7s linear infinite}
+.sky .auroraL{position:absolute;left:-20%;right:-20%;top:10%;height:55%;background:linear-gradient(100deg,rgba(80,255,180,.0),rgba(80,255,180,.28),rgba(120,140,255,.28),rgba(255,120,220,.0));filter:blur(22px);animation:aur 9s ease-in-out infinite alternate;pointer-events:none}
+.sky .fly{position:absolute;width:5px;height:5px;border-radius:50%;background:#ffef9a;box-shadow:0 0 8px 2px rgba(255,239,154,.8);animation:fl 7s ease-in-out infinite}
+.sky .flake{position:absolute;top:-8px;width:5px;height:5px;border-radius:50%;background:#fff;opacity:.85;animation:snowf 7s linear infinite}
+.pulse{animation:glow 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.ignite{animation:ign 1.4s ease-out}
+.tdy{animation:ringp 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+
+/* stats */
+.stats{display:flex;gap:8px;margin-bottom:12px}
+.stat{flex:1;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px 6px;text-align:center}
+.stat b{display:block;font-size:20px}
+.stat span{font-size:12px;color:var(--mute)}
+
+/* orbs */
+.orbs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.orbc{background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:12px 8px 10px;text-align:center}
+.orbc.off{opacity:.5}
+.orbc.got{background:var(--card);border-style:dashed}
+.orb{width:60px;height:60px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:inset -6px -8px 14px rgba(0,0,0,.14),0 4px 10px rgba(0,0,0,.14);animation:float 3s ease-in-out infinite}
+.orbc.got .orb{animation:none;opacity:.6;filter:saturate(.4)}
+.orbc.pop .orb{animation:pop .6s ease-out}
+.orbc b{display:block;font-size:15px}
+.orbc small{display:block;color:var(--mute);font-size:12px;margin-bottom:6px;min-height:16px}
+.orbc input[type=time]{width:100%;margin-bottom:6px;text-align:center}
+.orbc button{width:100%}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+.chip{padding:7px 12px;border-radius:20px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-size:14px}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* sky tab */
+.consgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cc{border-radius:16px;overflow:hidden;position:relative;color:#fff;cursor:pointer;padding:8px 8px 10px}
+.cc.future{opacity:.45}
+.cc.perfect{box-shadow:0 0 0 2px #ffd86b inset,0 0 14px rgba(255,216,107,.5)}
+.cc.cur{box-shadow:0 0 0 2px rgba(255,255,255,.7) inset}
+.cc svg{width:100%;height:auto;display:block}
+.cc .cn{display:flex;justify-content:space-between;font-size:13px;margin-top:2px}
+.cc .cn b{font-size:14px}
+.themeg{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.ti{min-width:68px;padding:8px 8px 6px;border-radius:14px;border:1px solid var(--line);background:var(--bg);text-align:center;cursor:pointer;font-size:12px}
+.ti .pv{display:flex;height:30px;align-items:center;justify-content:center;font-size:22px;margin-bottom:2px}
+.ti.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
+.ti.lock{opacity:.4;cursor:default}
+.sw{display:inline-block;width:42px;height:26px;border-radius:8px;border:1px solid rgba(255,255,255,.3)}
+.bar{height:8px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+
+/* logs */
 .day{border-top:1px solid var(--line);padding:10px 0}
 .day:first-of-type{border-top:0}
 .day h3{margin:0 0 4px;font-size:15px;display:flex;justify-content:space-between}
 .day h3 em{font-style:normal;font-size:13px;color:var(--mute)}
 .dose{display:flex;justify-content:space-between;font-size:14px;color:var(--mute);padding:2px 0}
 .dose button{padding:0 6px;background:none;color:var(--mute);font-size:16px}
-.miss{color:var(--warn)}
-details summary{cursor:pointer;font-weight:600;color:var(--mute)}
-textarea{width:100%;height:150px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;font-size:12px}
-.note{font-size:13px;color:var(--mute)}
+.appt{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-top:1px solid var(--line);font-size:15px}
+.appt.past{color:var(--mute);text-decoration:line-through}
+.appt button{padding:0 6px;background:none;color:var(--mute);font-size:16px}
 .sym h4{margin:12px 0 4px;font-size:14px}
 .sym label{display:flex;gap:8px;align-items:flex-start;padding:5px 0;font-size:15px}
 .sym input[type=checkbox]{margin-top:4px;width:18px;height:18px}
-.appt{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-top:1px solid var(--line);font-size:15px}
-.appt.past{color:var(--mute);text-decoration:line-through}
-.appt button{padding:0 6px;background:none;color:var(--mute);font-size:16px}
-.petcard{padding:0;overflow:hidden}
-.stage{padding:14px 14px 10px;position:relative;text-align:center}
-.bubble{background:#fff;color:#1c2430;border-radius:16px;padding:9px 12px;font-size:14px;line-height:1.4;margin:0 auto 6px;max-width:92%;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.bubble:after{content:"";position:absolute;left:50%;bottom:-7px;margin-left:-7px;border:7px solid transparent;border-top-color:#fff;border-bottom:0}
-.petbox{width:210px;height:200px;margin:8px auto 0;cursor:pointer;position:relative;-webkit-tap-highlight-color:transparent}
-.petbox svg{width:100%;height:100%;overflow:visible}
-.petbox .bodyg{transform-origin:100px 170px;animation:bob 2.6s ease-in-out infinite}
-.petbox.mood-happy .bodyg{animation:jump .9s ease-in-out infinite}
-.petbox.mood-sleepy .bodyg{animation:bob 4.5s ease-in-out infinite}
-.petbox .sp{position:absolute;font-size:20px;animation:twinkle 1.6s ease-in-out infinite}
-.petbox .zz{position:absolute;right:6px;top:8px;font-size:22px;animation:twinkle 2.2s ease-in-out infinite}
-.petinfo{padding:10px 14px 14px;background:var(--card)}
-.petname{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
-.petname b{font-size:17px}
-.chipx{display:inline-block;padding:3px 10px;border-radius:14px;background:var(--bg);font-size:13px;margin-left:6px}
-.xp{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin:4px 0}
-.xp i{display:block;height:100%;background:linear-gradient(90deg,#ffb347,#ff7e5f)}
-.orbs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
-.orbc{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:12px 8px 10px;text-align:center;position:relative}
-.orbc.off{opacity:.55}
-.orbc.got{background:var(--card);border-style:dashed}
-.orb{width:62px;height:62px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:inset -6px -8px 14px rgba(0,0,0,.12),0 4px 10px rgba(0,0,0,.12);animation:bob 2.4s ease-in-out infinite}
-.orbc.got .orb{animation:none;filter:grayscale(.85);opacity:.7}
-.orbc.pop .orb{animation:pop .6s ease-out}
-.orbc b{display:block;font-size:15px}
-.orbc small{display:block;color:var(--mute);font-size:12px;margin-bottom:6px}
-.orbc input[type=time]{width:100%;margin-bottom:6px;text-align:center}
-.orbc button{width:100%}
-.journey .wk{display:flex;align-items:center;gap:4px;margin:3px 0}
-.journey .wk.cur{background:var(--bg);border-radius:10px;padding:2px 0}
-.journey .wl{width:34px;font-size:11px;color:var(--mute);text-align:right;padding-right:4px}
-.journey .cell{flex:1;aspect-ratio:1;max-width:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;border:2px dashed var(--line);color:var(--mute)}
-.journey .cell.full{border:0;background:transparent;font-size:24px}
-.journey .cell.part{border:2px solid var(--accent);font-size:13px}
-.journey .cell.fut{border:0;opacity:.35;cursor:default}
-.journey .cell.today{border:2px solid var(--accent);animation:ring 1.6s ease-in-out infinite}
-.wardrobe{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.wi{min-width:44px;padding:6px 8px;border-radius:12px;border:1px solid var(--line);background:var(--bg);text-align:center;font-size:20px;cursor:pointer}
-.wi small{display:block;font-size:10px;color:var(--mute)}
-.wi.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
-.wi.lock{opacity:.35;cursor:default;filter:grayscale(1)}
-.toast{position:fixed;left:50%;top:calc(18px + env(safe-area-inset-top));transform:translateX(-50%);background:#1c2430;color:#fff;padding:8px 16px;border-radius:20px;font-weight:600;z-index:60;animation:toast 1.8s ease forwards}
-.cf{position:fixed;top:-20px;z-index:55;pointer-events:none;animation:fall 1.9s ease-in forwards}
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:70;display:flex;align-items:center;justify-content:center;padding:20px}
-.modal{background:var(--card);color:var(--ink);border-radius:20px;padding:22px 18px;max-width:340px;width:100%;text-align:center;animation:pop .5s ease-out}
-.modal .big1{font-size:54px}
+
+/* tab bar */
+#tabs{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;justify-content:center;padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--bg) 40%)}
+#tabs .tb{display:flex;width:100%;max-width:536px;background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 24px rgba(10,20,60,.16);overflow:hidden}
+#tabs button{flex:1;background:none;color:var(--mute);border-radius:0;padding:9px 0 8px;font-size:12px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px}
+#tabs button span{font-size:20px;line-height:1}
+#tabs button.on{color:var(--accent)}
+
+/* overlays */
+.toast{position:fixed;left:50%;top:calc(16px + env(safe-area-inset-top));transform:translateX(-50%);background:#141a2e;color:#fff;padding:9px 16px;border-radius:20px;font-weight:600;z-index:60;animation:toast 2s ease forwards;white-space:nowrap}
+.cf{position:fixed;z-index:55;pointer-events:none;animation:rise 2s ease-out forwards;font-weight:700}
+.ov{position:fixed;inset:0;background:rgba(5,8,25,.62);z-index:70;display:flex;align-items:center;justify-content:center;padding:18px}
+.modal{background:var(--card);color:var(--ink);border-radius:22px;padding:22px 18px;max-width:360px;width:100%;text-align:center;animation:pop .45s ease-out;max-height:90vh;overflow:auto}
+.modal .big1{font-size:52px}
 .modal h3{margin:6px 0 8px}
 .modal p{margin:6px 0;font-size:15px}
-.swatch{display:inline-block;width:44px;height:44px;border-radius:50%;vertical-align:middle;border:2px solid var(--line)}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-@keyframes jump{0%,100%{transform:translateY(0) scale(1,1)}30%{transform:translateY(-16px) scale(.97,1.04)}60%{transform:translateY(0) scale(1.05,.95)}}
-@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
-@keyframes pop{0%{transform:scale(.6)}60%{transform:scale(1.18)}100%{transform:scale(1)}}
-@keyframes ring{0%,100%{box-shadow:0 0 0 0 rgba(47,125,107,.5)}50%{box-shadow:0 0 0 6px rgba(47,125,107,0)}}
+.mdark{background:var(--sky-bg,#16256a);color:#fff}
+
+@keyframes tw{0%,100%{opacity:.15}50%{opacity:.9}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes glow{0%,100%{opacity:.18;transform:scale(1)}50%{opacity:.5;transform:scale(1.25)}}
+@keyframes ign{0%{transform:scale(.2);opacity:0}40%{transform:scale(2.4);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes ringp{0%,100%{opacity:.9;transform:scale(1)}50%{opacity:.35;transform:scale(1.5)}}
+@keyframes shoot{0%{opacity:0;transform:translate(0,0) rotate(-28deg)}4%{opacity:1}14%{opacity:0;transform:translate(-190px,100px) rotate(-28deg)}100%{opacity:0}}
+@keyframes aur{0%{transform:translateX(-6%) skewX(-4deg);opacity:.7}100%{transform:translateX(6%) skewX(4deg);opacity:1}}
+@keyframes fl{0%,100%{transform:translate(0,0);opacity:.2}25%{transform:translate(14px,-18px);opacity:1}50%{transform:translate(-8px,-34px);opacity:.4}75%{transform:translate(12px,-14px);opacity:1}}
+@keyframes snowf{to{transform:translate(18px,300px)}}
+@keyframes pop{0%{transform:scale(.6)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
 @keyframes toast{0%{opacity:0;transform:translate(-50%,-10px)}12%,80%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,-6px)}}
-@keyframes fall{to{transform:translate(var(--dx),105vh) rotate(var(--rot));opacity:.9}}
-@media(prefers-reduced-motion:reduce){.petbox .bodyg,.orb,.petbox .sp,.petbox .zz,.journey .cell.today{animation:none!important}.cf{display:none}}
+@keyframes rise{0%{opacity:1;transform:translate(0,0) scale(.6)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.3) rotate(var(--rot))}}
+@media(prefers-reduced-motion:reduce){.sky .bgs,.moon,.orb,.sky .shoot,.sky .auroraL,.sky .fly,.sky .flake,.pulse,.tdy,.ignite{animation:none!important}.cf{display:none}}
 </style>
 </head>
 <body>
 <h1>💊 服药记录</h1>
 <div id="app"></div>
+<div id="tabs"></div>
 <script>
 (function(){
 var REPO='keirama370/pill-data', FILE='data.json', BRANCH='main';
@@ -153,7 +181,7 @@ function defaultDrugs(){return [
  {id:'d2',name:'普托马尼',en:'Pretomanid',time:'08:00',sched:[{from:1,dose:'200毫克'}]},
  {id:'d3',name:'利奈唑胺',en:'Linezolid',time:'08:00',sched:[{from:1,dose:'600毫克'}]},
  {id:'d4',name:'莫西沙星',en:'Moxifloxacin',time:'08:00',sched:[{from:1,dose:'400毫克'}]}];}
-function defaults(){return {v:2,settingsAt:0,updatedAt:0,start:today,days:182,drugs:defaultDrugs(),pet:{name:'团子',equip:{}},places:[],logs:[],symptoms:[],appts:[],deleted:[]};}
+function defaults(){return {v:2,settingsAt:0,updatedAt:0,start:today,days:182,drugs:defaultDrugs(),sky:{palette:'ocean',star:'dot',line:'plain',moon:'none',title:'启程者',fx:[]},places:[],logs:[],symptoms:[],appts:[],deleted:[]};}
 function migrate(s){
   if(!s)return s;
   if((s.v||1)<2){
@@ -162,7 +190,8 @@ function migrate(s){
     s.drugs=d0;if(s.days===180)s.days=182;s.v=2;s.settingsAt=Date.now();
   }
   ['places','logs','symptoms','appts','deleted'].forEach(function(k){if(!s[k])s[k]=[];});
-  if(!s.pet)s.pet={name:'团子',equip:{}};
+  if(!s.sky)s.sky={palette:'ocean',star:'dot',line:'plain',moon:'none',title:'启程者',fx:[]};
+  delete s.pet;
   return s;
 }
 var state=defaults();
@@ -202,7 +231,7 @@ function api(method,body){
 }
 function cmp(a,b){return a<b?-1:a>b?1:0;}
 function norm(s){
-  return {v:2,settingsAt:s.settingsAt||0,updatedAt:s.updatedAt||0,start:s.start,days:s.days,drugs:s.drugs,pet:s.pet||{name:'团子',equip:{}},
+  return {v:2,settingsAt:s.settingsAt||0,updatedAt:s.updatedAt||0,start:s.start,days:s.days,drugs:s.drugs,sky:s.sky||{palette:'ocean',star:'dot',line:'plain',moon:'none',title:'启程者',fx:[]},
     places:(s.places||[]).slice().sort(function(a,b){return cmp(a.name,b.name);}),
     logs:(s.logs||[]).slice().sort(function(a,b){return cmp(a.date+a.time+a.id,b.date+b.time+b.id);}),
     symptoms:(s.symptoms||[]).slice().sort(function(a,b){return cmp(a.date,b.date);}),
@@ -218,7 +247,7 @@ function merge(a,b){
   var sm={};(a.symptoms||[]).concat(b.symptoms||[]).forEach(function(x){var o=sm[x.id];if(!o||(x.updatedAt||0)>(o.updatedAt||0))sm[x.id]=x;});
   var am={};(a.appts||[]).concat(b.appts||[]).forEach(function(x){if(!del[x.id])am[x.id]=x;});
   var vals=function(m){return Object.keys(m).map(function(k){return m[k];});};
-  return norm({settingsAt:base.settingsAt,updatedAt:Math.max(a.updatedAt||0,b.updatedAt||0),start:base.start,days:base.days,drugs:clone(base.drugs),pet:clone(base.pet||{name:'团子',equip:{}}),
+  return norm({settingsAt:base.settingsAt,updatedAt:Math.max(a.updatedAt||0,b.updatedAt||0),start:base.start,days:base.days,drugs:clone(base.drugs),sky:clone(base.sky||{palette:'ocean',star:'dot',line:'plain',moon:'none',title:'启程者',fx:[]}),
     places:vals(pm),logs:vals(lm),symptoms:vals(sm),appts:vals(am),deleted:Object.keys(del)});
 }
 function same(a,b){return JSON.stringify(norm(a))===JSON.stringify(norm(b));}
@@ -281,7 +310,7 @@ async function record(items,date){
   var pos=null;
   try{pos=await getPos();}catch(e){}
   var m=pos?matchPlace(pos):null;
-  var wasFull=isFull(date),pf=fullCount(),la=levelOf(xpNow());petTap='';
+  var wasFull=isFull(date),pf=fullCount();
   items.forEach(function(it){
     if(logsFor(date,it.drug).length)return;
     var l={id:uid(),date:date,drug:it.drug,time:it.time};
@@ -289,9 +318,10 @@ async function record(items,date){
     else{l.place=manualPlace;}
     state.logs.push(l);
   });
-  var nowFull=isFull(date),gain=items.length*10+((nowFull&&!wasFull)?20:0);
+  var nowFull=isFull(date);
   fxJust=items.map(function(it){return it.drug;});
-  fx={xp:gain,full:nowFull&&!wasFull&&date===today,modal:buildModal(pf,fullCount(),la,levelOf(xpNow()))};
+  fx={n:items.length,full:nowFull&&!wasFull,modal:buildModal(pf,fullCount())};
+  if(fx.full)fxIgnite=date;
   busy=pos?'':'⚠️ 没能定位，已用“'+manualPlace+'”记录。请检查浏览器的定位权限。';
   touch(false);render();doSync();
 }
@@ -363,98 +393,226 @@ function csv(){
   return rows.join('\n');
 }
 
-/* ---------- fun layer: pet, rewards ---------- */
-var fx=null, petTap='', fxJust=null;
+/* ---------- sky layer ---------- */
+var tab=ls('pill.tab')||'today';
+var fx=null,fxJust=null,fxIgnite='';
 var LS_SOUND='pill.sound';
-var WEEK_EMOJI=['🍓','🍋','🍊','🍇','🍑','🍒','🥝','🍉','🍍','🥥','🌽','🥕','🍄','🌸','🌻','🌼','🌷','🍀','🌈','⭐','🌙','☀️','❄️','🔥','🍪','🏆'];
-var ORB_COL=['#ff8a80','#ffd180','#80d8ff','#b9f6ca'];
+var NAMES=['北斗','天鹅','琴弦','天鹰','猎帆','银灯','雪冠','听潮','松林','长风','暖炉','纸船','萤火','麦穗','风铃','远山','白鹭','海岸','灯塔','彗尾','星桥','云梯','极光','暮钟','晨曦','终点'];
+var PALS={
+ ocean:{n:'深海蓝',bg:'linear-gradient(180deg,#0a1230 0%,#16256a 65%,#27408f 100%)',star:'#ffe27a'},
+ aurora:{n:'极光绿',bg:'linear-gradient(180deg,#06201f,#0d4a45 65%,#17756a)',star:'#c8ffd9'},
+ lavender:{n:'薰衣草夜',bg:'linear-gradient(180deg,#1c1245,#3b2a85 65%,#6b4fb8)',star:'#ffe6ff'},
+ sunset:{n:'暮色橙',bg:'linear-gradient(180deg,#2a1240,#8a2f5e 60%,#ff8a5c)',star:'#fff1b8'},
+ sakura:{n:'樱粉夜',bg:'linear-gradient(180deg,#2a1633,#6d2f66 65%,#c15b94)',star:'#ffe0ee'},
+ glacier:{n:'冰川青',bg:'linear-gradient(180deg,#071a2e,#0f4a73 65%,#35a0c9)',star:'#e2fbff'},
+ rosegold:{n:'玫瑰金',bg:'linear-gradient(180deg,#2b1b1f,#6b3b42 65%,#c88a7b)',star:'#ffe9d6'},
+ ink:{n:'墨夜金',bg:'linear-gradient(180deg,#05060a,#12141f 70%,#1d2033)',star:'#ffd35a'}
+};
 var UNLOCKS=[
- {type:'head',id:'orange',label:'橙子',val:'🍊'},
- {type:'head',id:'bow',label:'蝴蝶结',val:'🎀'},
- {type:'neck',id:'scarf',label:'围巾',val:'🧣'},
- {type:'face',id:'shades',label:'墨镜',val:'🕶️'},
- {type:'scene',id:'dawn',label:'晨光',bg:'linear-gradient(#ffe3cf,#fff6ec)'},
- {type:'head',id:'cap',label:'鸭舌帽',val:'🧢'},
- {type:'color',id:'mint',label:'薄荷绿',val:'#a8e6cf'},
- {type:'head',id:'tophat',label:'礼帽',val:'🎩'},
- {type:'neck',id:'medal0',label:'小星星',val:'🌟'},
- {type:'scene',id:'night',label:'星夜',bg:'linear-gradient(#34457a,#5a6aa6)'},
- {type:'face',id:'glasses',label:'眼镜',val:'👓'},
- {type:'head',id:'phones',label:'耳机',val:'🎧'},
- {type:'color',id:'sky',label:'天空蓝',val:'#a9d6ff'},
- {type:'head',id:'flower',label:'小花',val:'🌸'},
- {type:'scene',id:'snow',label:'雪地',bg:'linear-gradient(#dff0ff,#ffffff)'},
- {type:'neck',id:'bell',label:'铃铛',val:'🔔'},
- {type:'head',id:'grad',label:'学士帽',val:'🎓'},
- {type:'color',id:'lemon',label:'柠檬黄',val:'#ffe58f'},
- {type:'scene',id:'sunset',label:'晚霞',bg:'linear-gradient(#ffd1a9,#ffb3c1)'},
- {type:'head',id:'crown',label:'皇冠',val:'👑'},
- {type:'face',id:'goggles',label:'护目镜',val:'🥽'},
- {type:'color',id:'lilac',label:'薰衣草紫',val:'#d4c1f5'},
- {type:'scene',id:'forest',label:'森林',bg:'linear-gradient(#d3efc9,#f0fbea)'},
- {type:'color',id:'peach',label:'蜜桃粉',val:'#ffb8a8'},
- {type:'neck',id:'medal',label:'奖牌',val:'🏅'},
- {type:'head',id:'star',label:'终点之星',val:'🌟'}
+ {type:'effect',id:'shoot',label:'流星雨',g:'🌠'},
+ {type:'star',id:'sparkle',label:'四角星'},
+ {type:'palette',id:'aurora',label:'极光绿'},
+ {type:'title',id:'追星人',label:'追星人'},
+ {type:'effect',id:'fly',label:'萤火虫',g:'✨'},
+ {type:'palette',id:'lavender',label:'薰衣草夜'},
+ {type:'line',id:'glow',label:'发光连线',g:'💫'},
+ {type:'star',id:'heart',label:'心形星'},
+ {type:'palette',id:'sunset',label:'暮色橙'},
+ {type:'title',id:'守夜人',label:'守夜人'},
+ {type:'effect',id:'snow',label:'雪花',g:'❄️'},
+ {type:'moon',id:'moon1',label:'新月',g:'🌙'},
+ {type:'palette',id:'sakura',label:'樱粉夜'},
+ {type:'star',id:'flower',label:'花形星'},
+ {type:'title',id:'观星者',label:'观星者'},
+ {type:'effect',id:'aurora',label:'极光带',g:'🌌'},
+ {type:'palette',id:'glacier',label:'冰川青'},
+ {type:'line',id:'rainbow',label:'彩虹连线',g:'🌈'},
+ {type:'moon',id:'moon2',label:'满月',g:'🌕'},
+ {type:'star',id:'snow',label:'雪晶星'},
+ {type:'palette',id:'rosegold',label:'玫瑰金'},
+ {type:'title',id:'星轨旅人',label:'星轨旅人'},
+ {type:'palette',id:'ink',label:'墨夜金'},
+ {type:'moon',id:'moon3',label:'流星',g:'🌠'},
+ {type:'title',id:'银河守护者',label:'银河守护者'},
+ {type:'title',id:'终点之星',label:'终点之星'}
 ];
-var MILESTONES={1:'第一天完成！旅程正式出发 🚩',3:'连续三天的份都吃齐啦，好习惯正在长出来 🌱',7:'整整 7 天吃齐，团子给你鼓掌 👏',14:'累计 14 天吃齐，两周达成 💪',30:'30 天吃齐！一个月的坚持，太了不起了 🌙',50:'50 天！旅程已经走了快三成 🏔️',91:'过半啦！！后半程团子继续陪你 🎊',100:'一百天！这是传说级别的坚持 🏆',150:'150 天！终点已经看得见了 🌅',182:'全部完成！你做到了！！🎉🏆'};
-var TITLES=['小团子','元气团子','勤奋团子','靠谱团子','闪亮团子','坚持团子','勇气团子','雪山团子','星光团子','传奇团子'];
-var DONE=['今天份的能量收到啦！你真棒～','搞定！今天的你，值得一个大大的拥抱 🤗','又解锁了一天，团子骄傲.jpg','能量满格！剩下的时间随便玩～','你负责认真吃药，我负责替你开心 🎉','稳稳的，今天也没掉链子！'];
-var WAIT_EARLY=['早呀～准备好能量球了吗？','今天也一起加油哦～','我在这儿等你，不急。'];
-var WAIT_DUE=['该吃药啦，吃完点一下，我就开心了～','我有点饿了，喂我能量球吧 🥺','药在召唤你～'];
-var LATE=['还没吃的话，现在吃也来得及，我陪着你。','夜深了，吃完药就能安心睡啦。'];
-var YMISS='昨天有一次没记上，没关系，今天接着来。要是漏得比较多，记得告诉医疗团队一声。';
-var TAP=['嘿嘿，别戳啦～','你今天已经很棒了！','我是你的小小监督员 🫡','要不要喝口水？','深呼吸，一切都在往好的方向走。','今天也是在认真治疗的一天。','抱抱～'];
-function pick(a){return a[Math.floor(Math.random()*a.length)];}
+var MOONG={moon1:'🌙',moon2:'🌕',moon3:'🌠'};
+var GROUPS=[
+ {type:'palette',name:'夜空配色',free:[{type:'palette',id:'ocean',label:'深海蓝'}]},
+ {type:'star',name:'星星形状',free:[{type:'star',id:'dot',label:'圆点星'}]},
+ {type:'line',name:'连线样式',free:[{type:'line',id:'plain',label:'细线'}]},
+ {type:'effect',name:'特效（可多选）',free:[]},
+ {type:'moon',name:'夜空挂饰',free:[{type:'moon',id:'none',label:'无'}]},
+ {type:'title',name:'称号',free:[{type:'title',id:'启程者',label:'启程者'}]}
+];
+var MILESTONES={1:'第一天完成！旅程正式出发 🚩',3:'连续三天的份都吃齐啦，好习惯正在长出来 🌱',7:'整整 7 天吃齐，第一个星座亮起来了 ✨',14:'累计 14 天吃齐，两周达成 💪',30:'30 天吃齐！一个月的坚持，太了不起了 🌙',50:'50 天！旅程已经走了快三成 🏔️',91:'过半啦！后半程星空继续陪你 🎊',100:'一百天！这是传说级别的坚持 🏆',150:'150 天！终点已经看得见了 🌅',182:'全部完成！整片星空都被你点亮了！🎉🏆'};
+var DONE=['今晚的星星为你亮了。','又亮一颗，夜空里多了一个你的印记。','稳稳的，今天也没掉链子。','能量收集完毕，去享受剩下的时间吧。','一颗一颗，连成属于你的星座。'];
+var WAIT_EARLY=['等你收集今天的能量～','今天也一起点亮一颗星吧。','不急，我在这儿等你。'];
+var WAIT_DUE=['该吃药啦，吃完收集能量，今天的星就亮了。','夜空在等你～','药在召唤你，吃完点一下就好。'];
+var LATE=['还没吃的话，现在吃也来得及。','夜深了，吃完就能安心睡啦。'];
+var YMISS='昨天有一颗星还没亮，没关系，今天接着来。要是漏得比较多，记得告诉医疗团队一声。';
+var ORB_COL=['#ff8a80','#ffd180','#80d8ff','#b9f6ca'];
 function pickDay(a,salt){var str=today+salt,h=0;for(var i=0;i<str.length;i++)h=(h*31+str.charCodeAt(i))|0;return a[Math.abs(h)%a.length];}
 function fullCount(){var e=Math.max(0,Math.min(state.days,dayNo(today))),c=0;for(var i=0;i<e;i++)if(isFull(addDays(state.start,i)))c++;return c;}
-function xpNow(){return state.logs.length*10+fullCount()*20;}
-function levelOf(xp){return 1+Math.floor(xp/400);}
-function titleOf(l){return TITLES[Math.min(l-1,TITLES.length-1)];}
+function unlockedItems(){return UNLOCKS.slice(0,Math.min(UNLOCKS.length,Math.floor(fullCount()/7)));}
+function skyGet(){var s=state.sky||{};return {palette:s.palette||'ocean',star:s.star||'dot',line:s.line||'plain',moon:(s.moon&&s.moon!=='none')?s.moon:'',title:s.title||'启程者',fx:s.fx||[]};}
+function applyItem(type,id){
+  var s=state.sky;
+  if(type==='effect'){s.fx=s.fx||[];var i=s.fx.indexOf(id);if(i>=0)s.fx.splice(i,1);else s.fx.push(id);}
+  else s[type]=id;
+  touch(true);render();doSync();
+}
 function soundOn(){return ls(LS_SOUND)!=='off';}
 function beep(kind){
   if(!soundOn())return;
   try{
     var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
-    var ctx=new AC(),notes=kind==='win'?[523,659,784,1046]:[660];
+    var ctx=new AC(),notes=kind==='win'?[523,659,784,1046,1319]:[660];
     notes.forEach(function(f,i){
       var o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;
-      var t=ctx.currentTime+i*0.11;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.18,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+0.25);
-      o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+0.28);
+      var t=ctx.currentTime+i*0.11;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.16,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+0.3);
+      o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+0.32);
     });
-    setTimeout(function(){try{ctx.close();}catch(e){}},900);
+    setTimeout(function(){try{ctx.close();}catch(e){}},1100);
   }catch(e){}
 }
-function buzz(ms){try{if(navigator.vibrate)navigator.vibrate(ms);}catch(e){}}
-function toast(text){var t=el('div',{class:'toast',text:text});document.body.appendChild(t);setTimeout(function(){t.remove();},1900);}
-function confetti(){
-  var cols=['#ff6b6b','#ffd93d','#6bcB77','#4d96ff','#ff9ff3','#ffa94d'],em=['🎉','✨','⭐','💊','🌸'];
-  for(var i=0;i<46;i++){
+function buzz(p){try{if(navigator.vibrate)navigator.vibrate(p);}catch(e){}}
+function toast(text){var t=el('div',{class:'toast',text:text});document.body.appendChild(t);setTimeout(function(){t.remove();},2000);}
+function burst(){
+  var cols=['#ffe27a','#fff','#ffb3d9','#9fd8ff','#b9ffcf'],gl=['✦','✧','★','✦','·'];
+  for(var i=0;i<34;i++){
     var c=document.createElement('div');c.className='cf';
-    var useE=i%5===0;
-    if(useE){c.textContent=em[i%em.length];c.style.fontSize='20px';}
-    else{c.style.width='9px';c.style.height='14px';c.style.background=cols[i%cols.length];c.style.borderRadius='2px';}
-    c.style.left=(Math.random()*100)+'vw';
-    c.style.setProperty('--dx',((Math.random()-.5)*160)+'px');
-    c.style.setProperty('--rot',(Math.random()*720-360)+'deg');
-    c.style.animationDelay=(Math.random()*0.5)+'s';
-    c.style.animationDuration=(1.4+Math.random()*1)+'s';
-    document.body.appendChild(c);
-    (function(n){setTimeout(function(){n.remove();},3200);})(c);
+    c.textContent=gl[i%gl.length];c.style.color=cols[i%cols.length];c.style.fontSize=(14+Math.random()*16)+'px';
+    c.style.left=(30+Math.random()*40)+'vw';c.style.top=(28+Math.random()*20)+'vh';
+    c.style.setProperty('--dx',((Math.random()-.5)*260)+'px');c.style.setProperty('--dy',((Math.random()-.8)*220)+'px');c.style.setProperty('--rot',(Math.random()*360-180)+'deg');
+    c.style.animationDelay=(Math.random()*0.35)+'s';
+    document.body.appendChild(c);(function(n){setTimeout(function(){n.remove();},2600);})(c);
   }
 }
-function itemById(id){return UNLOCKS.filter(function(u){return u.id===id;})[0]||null;}
-function unlockedItems(){return UNLOCKS.slice(0,Math.min(UNLOCKS.length,Math.floor(fullCount()/7)));}
-function petMood(){
-  if(selDate!==today)return 'neutral';
-  if(isFull(today))return 'happy';
-  var hm=nowHM();
-  if(hm>='21:00')return 'sleepy';
-  if(dueDrugs(today).some(function(d){return d.time<=hm;}))return 'miss';
-  return 'neutral';
+function buildModal(pf,nf){
+  var parts=[],emoji='✨',title='',item=null;
+  if(nf>pf&&MILESTONES[nf]){title='里程碑达成！';parts.push(MILESTONES[nf]);emoji='🏆';}
+  var ub=Math.floor(nf/7);
+  if(nf>pf&&ub>Math.floor(pf/7)&&ub<=UNLOCKS.length){item=UNLOCKS[ub-1];if(!title){title='宝箱打开啦！';emoji='🎁';}parts.push('累计吃齐 '+nf+' 天，解锁了新宝贝：'+item.label);}
+  if(!parts.length)return null;
+  return {emoji:emoji,title:title,parts:parts,item:item};
 }
-function petSay(){
-  if(petTap)return petTap;
-  if(selDate!==today)return '正在补记 '+selDate+'，慢慢来～';
+function itemPreview(it){
+  var d=el('div',{class:'pv'});
+  if(it.type==='palette'){d.innerHTML='<span class="sw" style="background:'+PALS[it.id].bg+'"></span>';}
+  else if(it.type==='star'){d.innerHTML='<svg viewBox="-8 -8 16 16" width="28" height="28">'+starShape(it.id,0,0,3.4,'#f5b800')+'</svg>';}
+  else if(it.type==='moon'){d.textContent=it.id==='none'?'—':MOONG[it.id];}
+  else if(it.type==='title'){d.textContent='🏷️';}
+  else if(it.type==='line'){d.textContent=it.g||'〰️';if(it.id==='plain')d.textContent='—';}
+  else{d.textContent=it.g||'✨';}
+  return d;
+}
+function showModal(m){
+  var ov=el('div',{class:'ov'});
+  var box=el('div',{class:'modal'});
+  box.appendChild(el('div',{class:'big1',text:m.emoji}));
+  box.appendChild(el('h3',{text:m.title}));
+  m.parts.forEach(function(p){box.appendChild(el('p',{text:p}));});
+  if(m.item){var pv=itemPreview(m.item);pv.style.margin='10px 0';box.appendChild(pv);}
+  box.appendChild(el('button',{class:'big',text:m.item?'收下并用上':'收下啦',onclick:function(){
+    ov.remove();if(m.item){applyItem(m.item.type,m.item.id);}else render();
+  }}));
+  ov.appendChild(box);document.body.appendChild(ov);
+}
+function runFx(){
+  if(!fx)return;
+  var f=fx;fx=null;
+  setTimeout(function(){fxJust=null;fxIgnite='';},2000);
+  beep(f.full?'win':'ok');buzz(f.full?[30,40,70]:25);
+  toast(f.full?'今晚的星亮了 ✦':'能量 +'+f.n+' ✦');
+  if(f.full)burst();
+  if(f.modal)setTimeout(function(){showModal(f.modal);},f.full?1000:300);
+}
+
+/* constellations */
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+var _cons={};
+function consPoints(w){
+  if(_cons[w])return _cons[w];
+  var r=rng(w*7919+31),pts=[],y=28+r()*8;
+  for(var i=0;i<7;i++){
+    var x=9+i*(82/6)+(r()-.5)*5;
+    y+= (r()-.5)*34; y=Math.max(10,Math.min(50,y));
+    pts.push([+x.toFixed(1),+y.toFixed(1)]);
+  }
+  var edges=[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6]];
+  var extra=[[1,3],[2,4],[3,5],[0,2],[4,6]][Math.floor(r()*5)];
+  if(r()>.35)edges.push(extra);
+  _cons[w]={pts:pts,edges:edges};return _cons[w];
+}
+function weekStars(w){
+  var out=[];
+  for(var i=0;i<7;i++){
+    var idx=(w-1)*7+i,o=idx>=state.days;
+    var date=o?'':addDays(state.start,idx);
+    out.push({i:i,date:date,out:o,lit:!o&&isFull(date),future:!o&&date>today,partial:!o&&!isFull(date)&&logsFor(date).length>0,isToday:date===today});
+  }
+  return out;
+}
+function starShape(kind,x,y,r,col){
+  var t='translate('+x+','+y+')';
+  if(kind==='sparkle')return '<path d="M0 -1 Q.14 -.14 1 0 Q.14 .14 0 1 Q-.14 .14 -1 0 Q-.14 -.14 0 -1Z" transform="'+t+' scale('+(r*1.6)+')" fill="'+col+'"/>';
+  if(kind==='heart')return '<path d="M0 .95 C-1.35 -.1 -.95 -1 -.3 -.82 C-.1 -.74 0 -.55 0 -.42 C0 -.55 .1 -.74 .3 -.82 C.95 -1 1.35 -.1 0 .95Z" transform="'+t+' scale('+(r*1.15)+')" fill="'+col+'"/>';
+  if(kind==='flower'){var s='';for(var i=0;i<5;i++){var a=i*72*Math.PI/180;s+='<circle cx="'+(x+Math.sin(a)*r*.85).toFixed(2)+'" cy="'+(y-Math.cos(a)*r*.85).toFixed(2)+'" r="'+(r*.62).toFixed(2)+'" fill="'+col+'"/>';}return s+'<circle cx="'+x+'" cy="'+y+'" r="'+(r*.4).toFixed(2)+'" fill="#fff6c2"/>';}
+  if(kind==='snow'){var l='';for(var j=0;j<3;j++){l+='<line x1="'+x+'" y1="'+(y-r*1.2)+'" x2="'+x+'" y2="'+(y+r*1.2)+'" transform="rotate('+(j*60)+' '+x+' '+y+')"/>';}return '<g stroke="'+col+'" stroke-width="'+(r*.36).toFixed(2)+'" stroke-linecap="round">'+l+'</g><circle cx="'+x+'" cy="'+y+'" r="'+(r*.35).toFixed(2)+'" fill="'+col+'"/>';}
+  return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+col+'"/>';
+}
+function constSvg(w,mini){
+  var sk=skyGet(),pal=PALS[sk.palette]||PALS.ocean,c=consPoints(w),st=weekStars(w);
+  var gid='rb'+w+(mini?'m':'h'),defs='',lines='',stars='';
+  var lc=pal.star;
+  if(sk.line==='rainbow'){defs='<defs><linearGradient id="'+gid+'" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#ff7a7a"/><stop offset=".33" stop-color="#ffd86b"/><stop offset=".66" stop-color="#6bffb0"/><stop offset="1" stop-color="#6bb7ff"/></linearGradient></defs>';lc='url(#'+gid+')';}
+  var glow=sk.line==='glow'?' style="filter:drop-shadow(0 0 1.6px '+pal.star+')"':'';
+  c.edges.forEach(function(e){
+    var a=st[e[0]],b=st[e[1]],pa=c.pts[e[0]],pb=c.pts[e[1]];
+    if(a.out||b.out)return;
+    if(a.lit&&b.lit)lines+='<line x1="'+pa[0]+'" y1="'+pa[1]+'" x2="'+pb[0]+'" y2="'+pb[1]+'" stroke="'+lc+'" stroke-width="'+(mini?1.1:.7)+'" stroke-linecap="round" opacity=".9"'+glow+'/>';
+    else lines+='<line x1="'+pa[0]+'" y1="'+pa[1]+'" x2="'+pb[0]+'" y2="'+pb[1]+'" stroke="#fff" stroke-width=".4" stroke-dasharray="1.2 1.6" opacity=".2"/>';
+  });
+  var R=mini?3.1:2.7;
+  st.forEach(function(s,i){
+    if(s.out)return;
+    var p=c.pts[i],x=p[0],y=p[1],ig=(fxIgnite&&s.date===fxIgnite)?' ignite':'';
+    var g='<g data-date="'+s.date+'" style="cursor:pointer">';
+    g+='<circle cx="'+x+'" cy="'+y+'" r="7" fill="transparent"/>';
+    if(s.lit){
+      g+='<circle class="pulse" cx="'+x+'" cy="'+y+'" r="'+(R*1.7)+'" fill="'+pal.star+'" opacity=".22"/>';
+      g+='<g class="'+ig+'" style="transform-box:fill-box;transform-origin:center">'+starShape(sk.star,x,y,R,pal.star)+'</g>';
+    }else if(s.partial){
+      g+='<circle cx="'+x+'" cy="'+y+'" r="'+R+'" fill="none" stroke="'+pal.star+'" stroke-width=".8" opacity=".9"/><circle cx="'+x+'" cy="'+y+'" r="'+(R*.4)+'" fill="'+pal.star+'" opacity=".8"/>';
+    }else if(s.future){
+      g+='<circle cx="'+x+'" cy="'+y+'" r=".9" fill="#fff" opacity=".35"/>';
+    }else{
+      g+='<circle cx="'+x+'" cy="'+y+'" r="'+(R*.85)+'" fill="none" stroke="#fff" stroke-width=".6" stroke-dasharray="1.4 1.4" opacity=".4"/>';
+    }
+    if(s.isToday&&!s.lit)g+='<circle class="tdy" cx="'+x+'" cy="'+y+'" r="'+(R*1.7)+'" fill="none" stroke="'+pal.star+'" stroke-width=".7"/>';
+    g+='</g>';
+    stars+=g;
+  });
+  return '<svg viewBox="0 0 100 60" preserveAspectRatio="xMidYMid meet">'+defs+lines+stars+'</svg>';
+}
+function starfield(box,seed,n){
+  var r=rng(seed);
+  for(var i=0;i<n;i++){
+    var s=el('span',{class:'bgs',style:'left:'+(r()*100).toFixed(1)+'%;top:'+(r()*100).toFixed(1)+'%;width:'+(1+r()*1.8).toFixed(1)+'px;height:'+(1+r()*1.8).toFixed(1)+'px;animation-delay:'+(r()*3).toFixed(1)+'s;animation-duration:'+(2.4+r()*2.6).toFixed(1)+'s'});
+    box.appendChild(s);
+  }
+}
+function effectsLayer(box,sk){
+  var r=rng(77);
+  if(sk.fx.indexOf('aurora')>=0)box.appendChild(el('div',{class:'auroraL'}));
+  if(sk.fx.indexOf('shoot')>=0){box.appendChild(el('div',{class:'shoot',style:'left:78%;top:10%;animation-delay:1s'}));box.appendChild(el('div',{class:'shoot',style:'left:92%;top:38%;animation-delay:4.2s'}));}
+  if(sk.fx.indexOf('fly')>=0)for(var i=0;i<12;i++)box.appendChild(el('div',{class:'fly',style:'left:'+(r()*96).toFixed(0)+'%;top:'+(30+r()*65).toFixed(0)+'%;animation-delay:'+(r()*6).toFixed(1)+'s;animation-duration:'+(5+r()*4).toFixed(1)+'s'}));
+  if(sk.fx.indexOf('snow')>=0)for(var j=0;j<24;j++)box.appendChild(el('div',{class:'flake',style:'left:'+(r()*100).toFixed(0)+'%;animation-delay:'+(r()*7).toFixed(1)+'s;animation-duration:'+(5+r()*5).toFixed(1)+'s;width:'+(3+r()*3).toFixed(1)+'px;height:'+(3+r()*3).toFixed(1)+'px'}));
+}
+function weekOf(date){return Math.max(1,Math.min(Math.ceil(state.days/7),Math.floor((dayNo(date)-1)/7)+1));}
+function heroMsg(){
+  if(selDate!==today)return '正在补记 '+selDate+'，点亮漏掉的那一颗吧。';
   var due=dueDrugs(today);
   if(!due.length)return '今天不在疗程内。';
   if(isFull(today))return pickDay(DONE,'d');
@@ -464,163 +622,25 @@ function petSay(){
   if(dayNo(today)>1&&dueDrugs(addDays(today,-1)).length&&!isFull(addDays(today,-1)))return YMISS;
   return pickDay(WAIT_EARLY,'e');
 }
-function shade(hex,amt){
-  var n=parseInt(hex.slice(1),16),r=n>>16,g=(n>>8)&255,b=n&255;
-  function f(c){return Math.max(0,Math.min(255,Math.round(amt<0?c*(1+amt):c+(255-c)*amt)));}
-  return '#'+[f(r),f(g),f(b)].map(function(x){return ('0'+x.toString(16)).slice(-2);}).join('');
+function heroCard(){
+  var sk=skyGet(),pal=PALS[sk.palette]||PALS.ocean;
+  var w=weekOf(selDate),st=weekStars(w),litN=st.filter(function(s){return s.lit;}).length,tot=st.filter(function(s){return !s.out;}).length;
+  var box=el('div',{class:'sky',style:'background:'+pal.bg+';--star:'+pal.star});
+  starfield(box,42,34);effectsLayer(box,sk);
+  box.appendChild(el('div',{class:'hrow'},[el('span',{class:'chipS',text:'🏷️ '+sk.title}),sk.moon?el('span',{class:'moon',text:MOONG[sk.moon]||''}):null]));
+  var sv=el('div',{class:'csvg'});sv.innerHTML=constSvg(w,false);
+  sv.addEventListener('click',function(e){var g=e.target.closest&&e.target.closest('[data-date]');if(g){var d=g.getAttribute('data-date');if(d&&d<=today){selDate=d;render();}}});
+  box.appendChild(sv);
+  box.appendChild(el('div',{class:'hcap'},[el('b',{text:'第 '+w+' 周 · '+NAMES[Math.min(w-1,NAMES.length-1)]+'座'}),el('span',{text:'已点亮 '+litN+' / '+tot})]));
+  var due=dueDrugs(selDate),en=el('div',{class:'energy'});
+  due.forEach(function(d){en.appendChild(el('i',{class:logsFor(selDate,d.id).length?'on':''}));});
+  box.appendChild(en);
+  box.appendChild(el('div',{class:'hmsg',text:heroMsg()}));
+  return box;
 }
-function capySvg(mood,col,hi,fi,ni){
-  var line=shade(col,-0.42),dark='#2d1f1a',lt=shade(col,0.3),back=shade(col,-0.12);
-  var eye,mouth;
-  if(mood==='happy'){
-    eye='<path d="M142 99 Q150 87 158 99" fill="none" stroke="'+dark+'" stroke-width="5" stroke-linecap="round"/>';
-    mouth='<path d="M163 124 Q174 142 186 124 Z" fill="#e8737c" stroke="'+dark+'" stroke-width="3" stroke-linejoin="round"/>';
-  }else if(mood==='sleepy'){
-    eye='<path d="M143 96 H157" stroke="'+dark+'" stroke-width="5" stroke-linecap="round"/>';
-    mouth='<path d="M166 126 Q174 130 182 126" fill="none" stroke="'+dark+'" stroke-width="3.5" stroke-linecap="round"/>';
-  }else if(mood==='miss'){
-    eye='<ellipse cx="150" cy="95" rx="7" ry="8.5" fill="'+dark+'"/><circle cx="152.5" cy="91.5" r="3" fill="#fff"/><circle cx="147.5" cy="98.5" r="1.6" fill="#fff"/>';
-    mouth='<path d="M165 130 Q174 123 183 130" fill="none" stroke="'+dark+'" stroke-width="3.5" stroke-linecap="round"/>';
-  }else{
-    eye='<ellipse cx="150" cy="96" rx="5.5" ry="6.5" fill="'+dark+'"/><circle cx="152" cy="93.5" r="2.1" fill="#fff"/>';
-    mouth='<path d="M164 125 Q169 131 174 125 Q179 131 184 125" fill="none" stroke="'+dark+'" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>';
-  }
-  var acc='';
-  if(ni)acc+='<text x="124" y="150" font-size="30" text-anchor="middle">'+ni.val+'</text>';
-  if(fi)acc+='<text x="150" y="108" font-size="52" text-anchor="middle">'+fi.val+'</text>';
-  if(hi)acc+='<text x="140" y="78" font-size="42" text-anchor="middle">'+hi.val+'</text>';
-  return '<svg viewBox="0 0 200 190" aria-hidden="true">'+
-    '<ellipse cx="100" cy="184" rx="82" ry="6" fill="rgba(0,0,0,.14)"/>'+
-    '<g class="bodyg">'+
-    '<ellipse cx="38" cy="177" rx="14" ry="8" fill="'+shade(col,-0.25)+'" stroke="'+line+'" stroke-width="3"/>'+
-    '<ellipse cx="74" cy="179" rx="14" ry="8" fill="'+shade(col,-0.25)+'" stroke="'+line+'" stroke-width="3"/>'+
-    '<ellipse cx="86" cy="130" rx="76" ry="48" fill="'+back+'" stroke="'+line+'" stroke-width="3"/>'+
-    '<ellipse cx="70" cy="104" rx="32" ry="10" fill="#fff" opacity=".18" transform="rotate(-10 70 104)"/>'+
-    '<ellipse cx="116" cy="178" rx="14" ry="8" fill="'+shade(col,-0.1)+'" stroke="'+line+'" stroke-width="3"/>'+
-    '<ellipse cx="150" cy="176" rx="14" ry="8" fill="'+shade(col,-0.1)+'" stroke="'+line+'" stroke-width="3"/>'+
-    '<ellipse cx="128" cy="82" rx="9" ry="6.5" fill="'+col+'" stroke="'+line+'" stroke-width="3" transform="rotate(-25 128 82)"/><ellipse cx="128" cy="83" rx="4.5" ry="3" fill="#f1ab9f" transform="rotate(-25 128 83)"/>'+
-    '<ellipse cx="146" cy="110" rx="36" ry="32" fill="'+col+'" stroke="'+line+'" stroke-width="3"/>'+
-    '<rect x="150" y="98" width="44" height="38" rx="17" fill="'+lt+'" stroke="'+line+'" stroke-width="3"/>'+
-    '<rect x="172" y="98" width="21" height="17" rx="8" fill="#4a2f25"/><ellipse cx="179" cy="102.5" rx="4.5" ry="2" fill="#fff" opacity=".45"/>'+
-    '<ellipse cx="134" cy="116" rx="8" ry="5.5" fill="#ff8fa3" opacity=".5"/>'+
-    eye+mouth+acc+'</g></svg>';
-}
-
-function petSvg(mood){
-  var eq=state.pet.equip||{};
-  var col='#b8865a',ci=itemById(eq.color);if(ci)col=ci.val;
-  return capySvg(mood,col,itemById(eq.head),itemById(eq.face),itemById(eq.neck));
-}
-function petCard(s,n,weeks){
-  var xp=xpNow(),lv=levelOf(xp),pct=Math.round((xp%400)/400*100);
-  var eq=state.pet.equip||{},sc=itemById(eq.scene);
-  var mood=petMood();
-  var card=el('div',{class:'card petcard'});
-  var stage=el('div',{class:'stage',style:'background:'+(sc?sc.bg:'linear-gradient(#e6f6f0,#ffffff)')});
-  stage.appendChild(el('div',{class:'bubble',text:petSay()}));
-  var box=el('div',{class:'petbox mood-'+mood,onclick:function(){petTap=pick(TAP);buzz(15);render();}});
-  box.innerHTML=petSvg(mood);
-  if(mood==='happy'){
-    [['✨','6px','24px','0s'],['⭐','186px','30px','.5s'],['✨','196px','110px','1s'],['🌟','0px','100px','.3s']].forEach(function(a){
-      var sp=el('span',{class:'sp',text:a[0],style:'left:'+a[1]+';top:'+a[2]+';animation-delay:'+a[3]});box.appendChild(sp);});
-  }
-  if(mood==='sleepy')box.appendChild(el('span',{class:'zz',text:'💤'}));
-  stage.appendChild(box);
-  card.appendChild(stage);
-  var info=el('div',{class:'petinfo'});
-  info.appendChild(el('div',{class:'petname'},[
-    el('span',{},[el('b',{text:state.pet.name||'团子'}),el('span',{class:'chipx',text:'Lv.'+lv+' '+titleOf(lv)})]),
-    el('span',{},[el('span',{class:'chipx',text:'🔥 连续 '+s.streak+' 天'}),el('span',{class:'chipx',text:'✅ 累计 '+s.fullDays+' 天'})])
-  ]));
-  info.appendChild(el('div',{class:'xp',title:'经验'},[el('i',{style:'width:'+pct+'%'})]));
-  info.appendChild(el('div',{class:'note',text:'经验 '+(xp%400)+' / 400 · 每吃一种药 +10，吃齐一天 +20'}));
-  info.appendChild(el('div',{class:'note',style:'margin-top:6px',text:'第 '+n+' / '+state.days+' 天（第 '+Math.min(weeks,Math.floor((n-1)/7)+1)+' / '+weeks+' 周）· 预计 '+endDate()+' 结束'}));
-  info.appendChild(el('div',{class:'bar',style:'margin-top:4px'},[el('i',{style:'width:'+Math.round(n/state.days*100)+'%'})]));
-  info.appendChild(el('div',{class:'note',style:'margin-top:6px',text:'漏吃的天数：'+s.missed+'（不扣分，也不会清零，只是宝箱来得慢一点）'}));
-  card.appendChild(info);
-  return card;
-}
-function journeyCard(){
-  var card=el('div',{class:'card journey'});
-  card.appendChild(el('h2',{text:'我的旅程 · 贴纸册'}));
-  card.appendChild(el('div',{class:'note',style:'margin-bottom:8px',text:'每吃齐一天，就盖上这一周的贴纸。点一个格子可以去补记那一天。'}));
-  var weeks=Math.ceil(state.days/7),curW=Math.floor((Math.max(1,dayNo(today))-1)/7)+1;
-  for(var w=1;w<=weeks;w++){
-    var row=el('div',{class:'wk'+(w===curW?' cur':'')});
-    row.appendChild(el('div',{class:'wl',text:'第'+w+'周'}));
-    for(var i=0;i<7;i++){
-      var idx=(w-1)*7+i;
-      if(idx>=state.days){row.appendChild(el('div',{style:'flex:1;max-width:44px'}));continue;}
-      var dt=addDays(state.start,idx),cls='cell',txt='';
-      if(dt>today){cls+=' fut';txt='·';}
-      else if(isFull(dt)){cls+=' full';txt=WEEK_EMOJI[Math.min(w-1,WEEK_EMOJI.length-1)];}
-      else if(logsFor(dt).length){cls+=' part';txt='◐';}
-      if(dt===today)cls+=' today';
-      (function(dt2,cls2,txt2){
-        row.appendChild(el('div',{class:cls2,text:txt2,title:dt2,onclick:function(){if(dt2<=today){selDate=dt2;window.scrollTo(0,0);render();}}}));
-      })(dt,cls,txt);
-    }
-    card.appendChild(row);
-  }
-  // wardrobe
-  var un=unlockedItems();
-  card.appendChild(el('h2',{style:'margin-top:16px',text:'团子的衣橱（'+un.length+' / '+UNLOCKS.length+'）· 每累计吃齐 7 天开一个宝箱'}));
-  var wd=el('div',{class:'wardrobe'});
-  UNLOCKS.forEach(function(u,i){
-    var got=i<un.length,on=(state.pet.equip||{})[u.type]===u.id;
-    var face=u.type==='color'?'<span class="swatch" style="width:22px;height:22px;background:'+u.val+'"></span>':u.type==='scene'?'<span class="swatch" style="width:22px;height:22px;border-radius:6px;background:'+u.bg+'"></span>':u.val;
-    var b=el('div',{class:'wi'+(got?'':' lock')+(on?' on':''),onclick:function(){
-      if(!got)return;
-      state.pet.equip=state.pet.equip||{};
-      if(on)delete state.pet.equip[u.type];else state.pet.equip[u.type]=u.id;
-      touch(true);render();doSync();
-    }});
-    b.innerHTML=(got?face:'🔒')+'<small></small>';
-    b.querySelector('small').textContent=got?u.label:'第'+(i+1)+'箱';
-    wd.appendChild(b);
-  });
-  card.appendChild(wd);
-  return card;
-}
-function buildModal(pf,nf,la,lb){
-  var parts=[],emoji='🎉',title='',item=null;
-  if(nf>pf&&MILESTONES[nf]){title='里程碑达成！';parts.push(MILESTONES[nf]);emoji='🏆';}
-  var ub=Math.floor(nf/7);
-  if(nf>pf&&ub>Math.floor(pf/7)&&ub<=UNLOCKS.length){item=UNLOCKS[ub-1];if(!title){title='宝箱打开啦！';emoji='🎁';}parts.push('累计吃齐 '+nf+' 天，解锁了新宝贝：'+item.label);}
-  if(lb>la){if(!title){title='升级啦！';emoji='⬆️';}parts.push('现在是 Lv.'+lb+'「'+titleOf(lb)+'」');}
-  if(!parts.length)return null;
-  return {emoji:emoji,title:title,parts:parts,item:item};
-}
-function showModal(m){
-  var ov=el('div',{class:'ov'});
-  var box=el('div',{class:'modal'});
-  box.appendChild(el('div',{class:'big1',text:m.emoji}));
-  box.appendChild(el('h3',{text:m.title}));
-  m.parts.forEach(function(p){box.appendChild(el('p',{text:p}));});
-  if(m.item){
-    var pv=el('div',{style:'font-size:40px;margin:8px 0'});
-    if(m.item.type==='color')pv.innerHTML='<span class="swatch" style="background:'+m.item.val+'"></span>';
-    else if(m.item.type==='scene')pv.innerHTML='<span class="swatch" style="border-radius:12px;width:70px;background:'+m.item.bg+'"></span>';
-    else pv.textContent=m.item.val;
-    box.appendChild(pv);
-  }
-  box.appendChild(el('button',{class:'big',text:m.item?'收下并给团子用上':'收下啦',onclick:function(){
-    if(m.item){state.pet.equip=state.pet.equip||{};state.pet.equip[m.item.type]=m.item.id;touch(true);doSync();}
-    ov.remove();render();
-  }}));
-  ov.appendChild(box);document.body.appendChild(ov);
-}
-function runFx(){
-  if(!fx)return;
-  var f=fx;fx=null;setTimeout(function(){fxJust=null;},1500);
-  beep(f.full?'win':'ok');buzz(f.full?[30,40,60]:25);
-  toast('+'+f.xp+' 经验 ✨');
-  if(f.full)confetti();
-  if(f.modal)setTimeout(function(){showModal(f.modal);},f.full?900:300);
-}
-
 /* ---------- ui ---------- */
 var app=document.getElementById('app');
+var tabsEl=document.getElementById('tabs');
 function el(tag,attrs,kids){
   var e=document.createElement(tag);
   if(attrs){for(var k in attrs){
@@ -634,155 +654,227 @@ function el(tag,attrs,kids){
   (kids||[]).forEach(function(c){if(c==null)return;e.appendChild(typeof c==='string'?document.createTextNode(c):c);});
   return e;
 }
-function hr(){return el('hr',{style:'border:0;border-top:1px solid var(--line);margin:14px 0'});}
+function hr(){return el('hr',{class:'sep'});}
+var TABS=[['today','🌙','今天'],['sky','✨','星空'],['log','📒','记录'],['set','⚙️','设置']];
+function setTab(t){tab=t;lsSet('pill.tab',t);window.scrollTo(0,0);render();}
+function renderTabs(){
+  tabsEl.innerHTML='';
+  var tb=el('div',{class:'tb'});
+  TABS.forEach(function(t){tb.appendChild(el('button',{class:tab===t[0]?'on':'',onclick:function(){setTab(t[0]);}},[el('span',{text:t[1]}),t[2]]));});
+  tabsEl.appendChild(tb);
+}
+var SYNCMSGS={'ok':'✓ 已同步','syncing':'同步中…','fail':'⏳ 暂时没同步上，稍后会自动重试','auth':'⚠️ 同步密钥无效或已过期，请到“设置”里重新填写','no-token':'⚠️ 还没设置同步密钥，记录只存在这台手机上，提醒功能也不会知道你吃没吃。请到“设置”里填写。'};
 
-function render(){
-  var keepOpen=app.querySelector('details')&&app.querySelector('details').open;
-  app.innerHTML='';
-  var msgs={'ok':'✓ 已同步','syncing':'同步中…','fail':'⏳ 暂时没同步上，稍后会自动重试','auth':'⚠️ 同步密钥无效或已过期，请到“设置”里重新填写','no-token':'⚠️ 还没设置同步密钥，记录只存在这台手机上，提醒功能也不会知道你吃没吃。请到最下面的“设置”里填写。'};
-  app.appendChild(el('div',{class:(syncMsg==='auth'||syncMsg==='no-token')?'alert':'sync',text:msgs[syncMsg]||''}));
-  if(busy)app.appendChild(el('div',{class:busy.indexOf('⚠️')===0?'alert':'sync',text:busy}));
-
-  var s=stats();
-  var n=Math.min(state.days,Math.max(1,dayNo(today)));
-  var weeks=Math.round(state.days/7);
-  var inRange=dayNo(selDate)>=1&&dayNo(selDate)<=state.days;
-
-  // reminders / notices
-  var todaySym=symFor(today);
-  if(todaySym&&todaySym.items.length)app.appendChild(el('div',{class:'alert',text:'今天记录了症状。药单上说，出现这些情况请告知结核病医疗团队。'}));
+/* ----- today ----- */
+function banners(box){
+  box.appendChild(el('div',{class:(syncMsg==='auth'||syncMsg==='no-token')?'alert':'sync',text:SYNCMSGS[syncMsg]||''}));
+  if(busy)box.appendChild(el('div',{class:busy.indexOf('⚠️')===0?'alert':'sync',text:busy}));
+  var ts=symFor(today);
+  if(ts&&ts.items.length)box.appendChild(el('div',{class:'alert',text:'今天记录了症状。药单上说，出现这些情况请告知结核病医疗团队。'}));
   if(selDate===today){
     var due=dueDrugs(today).filter(function(d){return d.time<=nowHM()&&!logsFor(today,d.id).length;});
-    if(due.length)app.appendChild(el('div',{class:'alert',text:'⏰ 该吃了：'+due.map(function(d){return d.name;}).join('、')}));
+    if(due.length)box.appendChild(el('div',{class:'alert',text:'⏰ 该吃了：'+due.map(function(d){return d.name;}).join('、')}));
     state.drugs.forEach(function(d){
       var ph=phaseFor(d,dayNo(today));
-      if(ph&&ph.from>1&&ph.from===dayNo(today))app.appendChild(el('div',{class:'info',text:'今天起 '+d.name+' 改为：'+ruleText(d,today)}));
+      if(ph&&ph.from>1&&ph.from===dayNo(today))box.appendChild(el('div',{class:'info',text:'今天起 '+d.name+' 改为：'+ruleText(d,today)}));
     });
   }
-  var upcoming=state.appts.filter(function(x){return x.date===today||x.date===addDays(today,1);});
-  upcoming.forEach(function(x){app.appendChild(el('div',{class:'info',text:'📅 '+(x.date===today?'今天':'明天')+'有：'+x.title}));});
-
-  // pet + progress
-  app.appendChild(petCard(s,n,weeks));
-
-  // unnamed places
-  var un=unnamedGroup();
-  if(un){
-    var first=un[0];
-    var nameIn=el('input',{type:'text',placeholder:'给这个地点起名，如：家',style:'flex:1'});
-    app.appendChild(el('div',{class:'card'},[
-      el('div',{text:'📍 有 '+un.length+' 条记录的地点还没命名（以最近一条为准）。起名后，200 米内的记录会自动归为这个地点。'}),
-      el('div',{class:'line',style:'margin-top:8px'},[nameIn,el('button',{class:'small',text:'命名',onclick:function(){
-        var nm=nameIn.value.trim();if(!nm)return;
-        var ref={lat:first.lat,lng:first.lng};
-        state.places=state.places.filter(function(p){return p.name!==nm;});
-        state.places.push({name:nm,lat:ref.lat,lng:ref.lng});
-        state.logs.forEach(function(l){if(l.lat!=null&&!l.place&&distM(ref,l)<=200)l.place=nm;});
-        touch(true);render();doSync();
-      }})])
-    ]));
-  }
-
-  // today card
-  var card=el('div',{class:'card'});
-  card.appendChild(el('h2',{text:selDate===today?'今天':'补记'}));
-  card.appendChild(el('div',{class:'line'},[el('label',{text:'日期'}),el('input',{type:'date',value:selDate,min:state.start,max:today,onchange:function(e){if(e.target.value){selDate=e.target.value;render();}}})]));
-  var timeInputs={};
-  if(!inRange){card.appendChild(el('div',{class:'note',text:'这一天不在疗程内。'}));}
-  var petN=state.pet.name||'团子';
-  var orbs=el('div',{class:'orbs'});
-  state.drugs.forEach(function(d,di_){
-    var di=dueInfo(d,selDate),got=logsFor(selDate,d.id)[0];
-    var col=ORB_COL[di_%ORB_COL.length];
-    if(!di&&!got){
-      if(inRange)orbs.appendChild(el('div',{class:'orbc off'},[el('div',{class:'orb',style:'background:'+col,text:'😴'}),el('b',{text:d.name}),el('small',{text:'今天休息（'+ruleText(d,selDate)+'）'})]));
-      return;
-    }
-    var justNow=got&&fxJust&&fxJust.indexOf(d.id)>=0;
-    var c=el('div',{class:'orbc'+(got?' got':'')+(justNow?' pop':'')});
-    c.appendChild(el('div',{class:'orb',style:'background:'+col,text:got?'✓':'💊'}));
-    c.appendChild(el('b',{text:d.name}));
-    c.appendChild(el('small',{text:got?(got.time+' · '+(got.place||'📍未命名')):('计划 '+d.time+(di?' · '+di.dose:''))}));
-    if(got){
-      c.appendChild(el('button',{class:'ghost small',text:'撤销',onclick:function(){removeLog(got.id);}}));
-    }else{
-      var t=el('input',{type:'time',value:selDate===today?nowHM():d.time});
-      timeInputs[d.id]=t;
-      c.appendChild(t);
-      c.appendChild(el('button',{class:'small',text:'喂给'+petN,disabled:busy.indexOf('定位中')>=0?'disabled':null,onclick:function(){record([{drug:d.id,time:t.value||nowHM()}],selDate);}}));
-    }
-    orbs.appendChild(c);
-  });
-  card.appendChild(orbs);
-  var pending=dueDrugs(selDate).filter(function(d){return !logsFor(selDate,d.id).length;});
-  if(pending.length>1){
-    card.appendChild(el('button',{class:'big',text:'全部喂完 🎉（今日不再提醒）',disabled:busy.indexOf('定位中')>=0?'disabled':null,onclick:function(){
-      record(pending.map(function(d){return {drug:d.id,time:timeInputs[d.id].value||nowHM()};}),selDate);
-    }}));
-  }
-  card.appendChild(el('div',{class:'note',style:'margin-top:10px',text:'药单提醒：每天固定时间、随食物一起服用；服药后不久呕吐，请告知结核病医疗团队。'}));
-  card.appendChild(el('div',{class:'note',style:'margin-top:8px',text:'点“已吃”时会自动读取定位。定位失败时用这个地点：'}));
-  var chips=el('div',{class:'chips'});
-  var names=state.places.map(function(p){return p.name;});
-  if(names.indexOf(manualPlace)<0)names.unshift(manualPlace);
-  names.forEach(function(p){chips.appendChild(el('span',{class:'chip'+(p===manualPlace?' on':''),text:p,onclick:function(){manualPlace=p;lsSet(LS_MANUAL,p);render();}}));});
-  card.appendChild(chips);
-  app.appendChild(card);
-
-  app.appendChild(journeyCard());
-
-  // symptoms
-  var sc=symCurrent(selDate);
-  var saved=symFor(selDate);
-  var scard=el('div',{class:'card sym'});
-  scard.appendChild(el('h2',{text:(selDate===today?'今天':selDate)+'有不舒服吗？'}));
-  scard.appendChild(el('div',{class:'note',text:'下面是药单上列的症状。都没有就不用勾，直接点保存。'}));
+  state.appts.filter(function(x){return x.date===today||x.date===addDays(today,1);}).forEach(function(x){
+    box.appendChild(el('div',{class:'info',text:'📅 '+(x.date===today?'今天':'明天')+'有：'+x.title}));});
+}
+function symCard(){
+  var sc=symCurrent(selDate),saved=symFor(selDate);
+  var c=el('div',{class:'card sym'});
+  c.appendChild(el('h2',{text:(selDate===today?'今天':selDate)+'有不舒服吗？'}));
+  c.appendChild(el('div',{class:'note',text:'下面是药单上列的症状。都没有就不用勾，直接点保存。'}));
   SYM.forEach(function(g){
-    scard.appendChild(el('h4',{text:g.g}));
+    c.appendChild(el('h4',{text:g.g}));
     g.items.forEach(function(it){
       var cb=el('input',{type:'checkbox',onchange:function(e){
-        var cur=symCurrent(selDate);var idx=cur.items.indexOf(it);
+        var cur=symCurrent(selDate),idx=cur.items.indexOf(it);
         if(e.target.checked&&idx<0)cur.items.push(it);
         if(!e.target.checked&&idx>=0)cur.items.splice(idx,1);
         symDraft=cur;
       }});
       if(sc.items.indexOf(it)>=0)cb.checked=true;
-      scard.appendChild(el('label',{},[cb,it]));
+      c.appendChild(el('label',{},[cb,it]));
     });
   });
-  var noteIn=el('input',{type:'text',placeholder:'备注（可不填）',value:sc.note,style:'width:100%;margin-top:8px',oninput:function(e){var cur=symCurrent(selDate);cur.note=e.target.value;symDraft=cur;}});
-  scard.appendChild(noteIn);
-  scard.appendChild(el('button',{class:'big',text:saved?'更新这天的症状记录':'保存症状记录',onclick:function(){
+  c.appendChild(el('input',{type:'text',placeholder:'备注（可不填）',value:sc.note,style:'width:100%;margin-top:8px',oninput:function(e){var cur=symCurrent(selDate);cur.note=e.target.value;symDraft=cur;}}));
+  c.appendChild(el('button',{class:'big',text:saved?'更新这天的症状记录':'保存症状记录',onclick:function(){
     var cur=symCurrent(selDate);
     var rec={id:'s'+selDate,date:selDate,items:cur.items.slice(),note:cur.note||'',updatedAt:Date.now()};
     state.symptoms=state.symptoms.filter(function(x){return x.date!==selDate;});
     state.symptoms.push(rec);symDraft=null;touch(false);render();doSync();
   }}));
-  if(saved)scard.appendChild(el('div',{class:'note',style:'margin-top:8px',text:saved.items.length?'✓ 已记录 '+saved.items.length+' 项。药单上说，出现这些情况请告知结核病医疗团队。':'✓ 已记录：这天没有不适'}));
-  app.appendChild(scard);
+  if(saved)c.appendChild(el('div',{class:'note',style:'margin-top:8px',text:saved.items.length?'✓ 已记录 '+saved.items.length+' 项。药单上说，出现这些情况请告知结核病医疗团队。':'✓ 已记录：这天没有不适'}));
+  return c;
+}
+function todayCard(){
+  var inRange=dayNo(selDate)>=1&&dayNo(selDate)<=state.days;
+  var card=el('div',{class:'card'});
+  card.appendChild(el('h2',{text:(selDate===today?'今天':'补记')+' · '+selDate+'（周'+WDN[wdOf(selDate)]+'）'}));
+  card.appendChild(el('div',{class:'line'},[el('label',{text:'换一天补记'}),el('input',{type:'date',value:selDate,min:state.start,max:today,onchange:function(e){if(e.target.value){selDate=e.target.value;render();}}})]));
+  var timeInputs={};
+  if(!inRange)card.appendChild(el('div',{class:'note',text:'这一天不在疗程内。'}));
+  var orbs=el('div',{class:'orbs'});
+  state.drugs.forEach(function(d,k){
+    var di=dueInfo(d,selDate),got=logsFor(selDate,d.id)[0],col=ORB_COL[k%ORB_COL.length];
+    if(!di&&!got){
+      if(inRange)orbs.appendChild(el('div',{class:'orbc off'},[el('div',{class:'orb',style:'background:'+col,text:'🌙'}),el('b',{text:d.name}),el('small',{text:'今天休息（'+ruleText(d,selDate)+'）'})]));
+      return;
+    }
+    var just=got&&fxJust&&fxJust.indexOf(d.id)>=0;
+    var c=el('div',{class:'orbc'+(got?' got':'')+(just?' pop':'')});
+    c.appendChild(el('div',{class:'orb',style:'background:'+col,text:got?'✓':'💊'}));
+    c.appendChild(el('b',{text:d.name}));
+    c.appendChild(el('small',{text:got?(got.time+' · '+(got.place||'📍未命名')):('计划 '+d.time+(di?' · '+di.dose:''))}));
+    if(got)c.appendChild(el('button',{class:'ghost small',text:'撤销',onclick:function(){removeLog(got.id);}}));
+    else{
+      var t=el('input',{type:'time',value:selDate===today?nowHM():d.time});
+      timeInputs[d.id]=t;c.appendChild(t);
+      c.appendChild(el('button',{class:'small',text:'收集能量',disabled:busy.indexOf('定位中')>=0?'disabled':null,onclick:function(){record([{drug:d.id,time:t.value||nowHM()}],selDate);}}));
+    }
+    orbs.appendChild(c);
+  });
+  card.appendChild(orbs);
+  var pending=dueDrugs(selDate).filter(function(d){return !logsFor(selDate,d.id).length;});
+  if(pending.length>1)card.appendChild(el('button',{class:'big',text:'一次收集全部 ✨（今日不再提醒）',disabled:busy.indexOf('定位中')>=0?'disabled':null,onclick:function(){
+    record(pending.map(function(d){return {drug:d.id,time:timeInputs[d.id].value||nowHM()};}),selDate);}}));
+  card.appendChild(el('div',{class:'note',style:'margin-top:12px',text:'药单提醒：每天固定时间、随食物一起服用；服药后不久呕吐，请告知结核病医疗团队。'}));
+  card.appendChild(el('div',{class:'note',style:'margin-top:8px',text:'点按钮时会自动读取定位。定位失败时用这个地点：'}));
+  var chips=el('div',{class:'chips'});
+  var names=state.places.map(function(p){return p.name;});
+  if(names.indexOf(manualPlace)<0)names.unshift(manualPlace);
+  names.forEach(function(p){chips.appendChild(el('span',{class:'chip'+(p===manualPlace?' on':''),text:p,onclick:function(){manualPlace=p;lsSet(LS_MANUAL,p);render();}}));});
+  card.appendChild(chips);
+  return card;
+}
+function unnamedCard(){
+  var un=unnamedGroup();if(!un)return null;
+  var first=un[0],nameIn=el('input',{type:'text',placeholder:'给这个地点起名，如：家',style:'flex:1'});
+  return el('div',{class:'card'},[
+    el('div',{text:'📍 有 '+un.length+' 条记录的地点还没命名（以最近一条为准）。起名后，200 米内的记录会自动归为这个地点。'}),
+    el('div',{class:'line',style:'margin-top:8px'},[nameIn,el('button',{class:'small',text:'命名',onclick:function(){
+      var nm=nameIn.value.trim();if(!nm)return;
+      var ref={lat:first.lat,lng:first.lng};
+      state.places=state.places.filter(function(p){return p.name!==nm;});
+      state.places.push({name:nm,lat:ref.lat,lng:ref.lng});
+      state.logs.forEach(function(l){if(l.lat!=null&&!l.place&&distM(ref,l)<=200)l.place=nm;});
+      touch(true);render();doSync();
+    }})])
+  ]);
+}
+function pageToday(){
+  var box=el('div');
+  banners(box);
+  box.appendChild(heroCard());
+  var s=stats();
+  box.appendChild(el('div',{class:'stats'},[
+    el('div',{class:'stat'},[el('b',{text:'🔥 '+s.streak}),el('span',{text:'连续天数'})]),
+    el('div',{class:'stat'},[el('b',{text:'✦ '+s.fullDays}),el('span',{text:'已点亮的星'})]),
+    el('div',{class:'stat'},[el('b',{class:s.missed?'miss':'',text:String(s.missed)}),el('span',{text:'漏吃的天数'})])
+  ]));
+  var u=unnamedCard();if(u)box.appendChild(u);
+  box.appendChild(todayCard());
+  box.appendChild(symCard());
+  return box;
+}
 
-  // appointments
-  var acard=el('div',{class:'card'});
-  acard.appendChild(el('h2',{text:'复诊 / 检查安排'}));
+/* ----- sky ----- */
+function showConstModal(w){
+  var sk=skyGet(),pal=PALS[sk.palette]||PALS.ocean,st=weekStars(w);
+  var litN=st.filter(function(s){return s.lit;}).length,tot=st.filter(function(s){return !s.out;}).length;
+  var ov=el('div',{class:'ov',onclick:function(e){if(e.target===ov)ov.remove();}});
+  var box=el('div',{class:'modal mdark',style:'background:'+pal.bg+';--star:'+pal.star});
+  box.appendChild(el('h3',{text:'第 '+w+' 周 · '+NAMES[Math.min(w-1,NAMES.length-1)]+'座'}));
+  var sv=el('div',{class:'csvg'});sv.innerHTML=constSvg(w,false);
+  sv.addEventListener('click',function(e){var g=e.target.closest&&e.target.closest('[data-date]');if(g){var d=g.getAttribute('data-date');if(d&&d<=today){selDate=d;ov.remove();setTab('today');}}});
+  box.appendChild(sv);
+  box.appendChild(el('p',{text:'点亮了 '+litN+' / '+tot+' 颗'+(litN===tot&&tot===7?'  🌕 满月周':'')}));
+  var miss=st.filter(function(s){return !s.out&&!s.lit&&!s.future;});
+  box.appendChild(el('p',{style:'font-size:13px;opacity:.85',text:miss.length?'还没亮的星可以点一下去补记。':'这一周的星都亮着，真棒。'}));
+  box.appendChild(el('button',{class:'ghost',style:'margin-top:6px',text:'关闭',onclick:function(){ov.remove();}}));
+  ov.appendChild(box);document.body.appendChild(ov);
+}
+function themeTile(it,unlockedIdx,k){
+  var got=k<0||k<unlockedIdx,sk=skyGet();
+  var on=it.type==='effect'?sk.fx.indexOf(it.id)>=0:(it.type==='moon'?((it.id==='none'&&!sk.moon)||sk.moon===it.id):sk[it.type]===it.id);
+  var t=el('div',{class:'ti'+(got?'':' lock')+(on?' on':''),onclick:function(){if(got)applyItem(it.type,it.id);}});
+  if(got)t.appendChild(itemPreview(it));else t.appendChild(el('div',{class:'pv',text:'🔒'}));
+  t.appendChild(el('div',{text:got?it.label:'第'+(k+1)+'个宝箱'}));
+  return t;
+}
+function pageSky(){
+  var box=el('div');
+  var fc=fullCount(),un=unlockedItems().length,curW=weekOf(today),weeks=Math.ceil(state.days/7);
+  var doneC=0;for(var w0=1;w0<=weeks;w0++){var s0=weekStars(w0).filter(function(s){return !s.out;});if(s0.length&&s0.every(function(s){return s.lit;}))doneC++;}
+  var sum=el('div',{class:'card'});
+  sum.appendChild(el('h2',{text:'我的星空'}));
+  sum.appendChild(el('div',{class:'line'},[el('b',{style:'font-size:22px',text:'✦ '+fc+' / '+state.days}),el('span',{class:'note',text:'颗星已点亮 · 满月周 '+doneC+' 个'})]));
+  sum.appendChild(el('div',{class:'bar'},[el('i',{style:'width:'+Math.round(fc/state.days*100)+'%'})]));
+  sum.appendChild(el('div',{class:'note',style:'margin-top:8px',text:'每吃齐一天点亮一颗星，一周 7 颗连成一个星座。漏掉的星不会消失，补记就能点亮；每累计点亮 7 颗开一个宝箱（已开 '+un+' / '+UNLOCKS.length+'）。'}));
+  box.appendChild(sum);
+
+  var sk=skyGet(),pal=PALS[sk.palette]||PALS.ocean;
+  var gc=el('div',{class:'card'});
+  gc.appendChild(el('h2',{text:'26 个星座'}));
+  var grid=el('div',{class:'consgrid'});
+  for(var w=1;w<=weeks;w++){
+    var st=weekStars(w),first=st[0].date,tot=st.filter(function(s){return !s.out;}).length,litN=st.filter(function(s){return s.lit;}).length;
+    var cls='cc'+(first>today?' future':'')+(w===curW?' cur':'')+(litN===tot&&tot>0?' perfect':'');
+    var c=el('div',{class:cls,style:'background:'+pal.bg+';--star:'+pal.star});
+    var sv=el('div');sv.innerHTML=constSvg(w,true);c.appendChild(sv);
+    c.appendChild(el('div',{class:'cn'},[el('b',{text:'第'+w+'周 '+NAMES[Math.min(w-1,NAMES.length-1)]}),el('span',{text:litN+'/'+tot})]));
+    (function(w2,c2){c2.addEventListener('click',function(){showConstModal(w2);});})(w,c);
+    grid.appendChild(c);
+  }
+  gc.appendChild(grid);
+  box.appendChild(gc);
+
+  var tc=el('div',{class:'card'});
+  tc.appendChild(el('h2',{text:'星空装扮'}));
+  GROUPS.forEach(function(g){
+    tc.appendChild(el('div',{class:'note',style:'margin:10px 0 6px;font-weight:600',text:g.name}));
+    var row=el('div',{class:'themeg'});
+    g.free.forEach(function(it){row.appendChild(themeTile(it,un,-1));});
+    UNLOCKS.forEach(function(it,k){if(it.type===g.type)row.appendChild(themeTile(it,un,k));});
+    tc.appendChild(row);
+  });
+  box.appendChild(tc);
+  return box;
+}
+
+/* ----- log ----- */
+function pageLog(){
+  var box=el('div');
+  var ac=el('div',{class:'card'});
+  ac.appendChild(el('h2',{text:'复诊 / 检查安排'}));
   var ap=state.appts.slice().sort(function(a,b){return cmp(a.date,b.date);});
-  if(!ap.length)acard.appendChild(el('div',{class:'note',text:'还没有安排。药单上说治疗期间要定期抽血和做心电图，日期定了就填在这里，我会在前一天和当天早上提醒。'}));
+  if(!ap.length)ac.appendChild(el('div',{class:'note',text:'还没有安排。药单上说治疗期间要定期抽血和做心电图，日期定了就填在这里，我会在前一天傍晚和当天早上提醒。'}));
   ap.forEach(function(x){
-    acard.appendChild(el('div',{class:'appt'+(x.date<today?' past':'')},[el('span',{text:x.date+'（周'+WDN[wdOf(x.date)]+'） '+x.title}),el('button',{text:'×',title:'删除',onclick:function(){
+    ac.appendChild(el('div',{class:'appt'+(x.date<today?' past':'')},[el('span',{text:x.date+'（周'+WDN[wdOf(x.date)]+'） '+x.title}),el('button',{text:'×',title:'删除',onclick:function(){
       state.appts=state.appts.filter(function(y){return y.id!==x.id;});state.deleted.push(x.id);touch(false);render();doSync();}})]));
   });
   var aDate=el('input',{type:'date',value:addDays(today,1),min:today});
   var aType=el('select',{},['抽血','心电图','复诊','其他'].map(function(t){return el('option',{value:t,text:t});}));
-  acard.appendChild(el('div',{class:'line',style:'margin-top:10px'},[aDate,aType,el('button',{class:'small',text:'添加',onclick:function(){
-    if(!aDate.value)return;
-    state.appts.push({id:uid(),date:aDate.value,title:aType.value});touch(false);render();doSync();
-  }})]));
-  app.appendChild(acard);
+  ac.appendChild(el('div',{class:'line',style:'margin-top:10px'},[aDate,aType,el('button',{class:'small',text:'添加',onclick:function(){
+    if(!aDate.value)return;state.appts.push({id:uid(),date:aDate.value,title:aType.value});touch(false);render();doSync();}})]));
+  box.appendChild(ac);
 
-  // history
+  var sc=el('div',{class:'card'});
+  sc.appendChild(el('h2',{text:'给医生看的汇总'}));
+  var sta=el('textarea',{readonly:'readonly',style:'height:220px'});sta.value=summaryText;
+  sc.appendChild(el('div',{class:'line'},[
+    el('button',{text:'生成汇总',onclick:function(){summaryText=buildSummary();render();}}),
+    summaryText?el('button',{class:'ghost',text:'复制',onclick:function(){try{navigator.clipboard.writeText(summaryText).catch(function(){sta.select();});}catch(e){sta.select();}}}):null
+  ]));
+  if(summaryText)sc.appendChild(sta);
+  box.appendChild(sc);
+
   var hist=el('div',{class:'card'});
   hist.appendChild(el('h2',{text:'历史记录'}));
-  var list=[],seen={};
-  var elapsed=Math.max(1,Math.min(state.days,dayNo(today)));
+  var list=[],seen={},elapsed=Math.max(1,Math.min(state.days,dayNo(today)));
   for(var i=0;i<elapsed;i++){var dd=addDays(state.start,i);list.push(dd);seen[dd]=1;}
   state.logs.forEach(function(l){if(!seen[l.date]){seen[l.date]=1;list.push(l.date);}});
   list.sort().reverse();
@@ -790,65 +882,45 @@ function render(){
   list.forEach(function(date){
     var ls_=logsFor(date).sort(function(a,b){return cmp(a.time,b.time);});
     if(!ls_.length&&date===today)return;
-    var full=isFull(date),dueN=dueDrugs(date).length;
-    var day=el('div',{class:'day'});
-    day.appendChild(el('h3',{},[date+(date===today?'（今天）':''),el('em',{class:full?'done':'miss',text:full?'✓ 吃齐':(ls_.length+'/'+dueN)})]));
-    ls_.forEach(function(l){
-      day.appendChild(el('div',{class:'dose'},[
-        el('span',{text:l.time+'  '+drugName(l.drug)+' · '+(l.place||'📍未命名')}),
-        el('button',{text:'×',title:'删除',onclick:function(){removeLog(l.id);}})
-      ]));
-    });
+    var full=isFull(date),dueN=dueDrugs(date).length,day=el('div',{class:'day'});
+    day.appendChild(el('h3',{},[date+(date===today?'（今天）':''),el('em',{class:full?'done':'miss',text:full?'✦ 吃齐':(ls_.length+'/'+dueN)})]));
+    ls_.forEach(function(l){day.appendChild(el('div',{class:'dose'},[el('span',{text:l.time+'  '+drugName(l.drug)+' · '+(l.place||'📍未命名')}),el('button',{text:'×',title:'删除',onclick:function(){removeLog(l.id);}})]));});
     var sy=symFor(date);
     if(sy&&(sy.items.length||sy.note))day.appendChild(el('div',{class:'dose'},[el('span',{class:'miss',text:'症状：'+sy.items.join('；')+(sy.note?'（'+sy.note+'）':'')})]));
     hist.appendChild(day);
   });
-  app.appendChild(hist);
+  box.appendChild(hist);
+  return box;
+}
 
-  // doctor summary
-  var scd=el('div',{class:'card'});
-  scd.appendChild(el('h2',{text:'给医生看的汇总'}));
-  var sta=el('textarea',{readonly:'readonly',style:'height:220px'});
-  sta.value=summaryText;
-  scd.appendChild(el('div',{class:'line'},[
-    el('button',{text:'生成汇总',onclick:function(){summaryText=buildSummary();render();}}),
-    summaryText?el('button',{class:'ghost',text:'复制',onclick:function(){try{navigator.clipboard.writeText(summaryText).catch(function(){sta.select();});}catch(e){sta.select();}}}):null
-  ]));
-  if(summaryText)scd.appendChild(sta);
-  app.appendChild(scd);
-
-  // settings
-  var det=el('details');
-  if(keepOpen||syncMsg==='no-token'||syncMsg==='auth')det.open=true;
-  det.appendChild(el('summary',{text:'设置 / 导出'}));
-  det.appendChild(el('p',{class:'note',text:'1) 每天吃药的时间（提醒按这里的时间算）。剂量和服用规则按药单设置，医生调整后请告诉我。'}));
-  var nameIn2={},timeIn={};
+/* ----- settings ----- */
+function pageSet(){
+  var box=el('div');
+  var c1=el('div',{class:'card'});
+  c1.appendChild(el('h2',{text:'吃药时间和疗程'}));
+  c1.appendChild(el('p',{class:'note',text:'每种药每天的计划时间（提醒按这里的时间算）。剂量和服用规则按药单设置，医生调整后请告诉我。'}));
+  var nameIn={},timeIn={};
   state.drugs.forEach(function(d){
-    nameIn2[d.id]=el('input',{type:'text',value:d.name,style:'width:110px'});
+    nameIn[d.id]=el('input',{type:'text',value:d.name,style:'width:110px'});
     timeIn[d.id]=el('input',{type:'time',value:d.time});
-    det.appendChild(el('div',{class:'line'},[nameIn2[d.id],timeIn[d.id]]));
+    c1.appendChild(el('div',{class:'line'},[nameIn[d.id],timeIn[d.id]]));
   });
-  var startIn=el('input',{type:'date',value:state.start});
-  var daysIn=el('input',{type:'text',value:String(state.days),style:'width:70px',inputmode:'numeric'});
-  det.appendChild(el('div',{class:'line'},[el('label',{text:'开始吃药的日期'}),startIn]));
-  det.appendChild(el('div',{class:'line'},[el('label',{text:'疗程天数（26 周 = 182 天）'}),daysIn]));
-  det.appendChild(el('button',{text:'保存设置',onclick:function(){
-    state.drugs.forEach(function(d){d.name=nameIn2[d.id].value.trim()||d.name;d.time=timeIn[d.id].value||d.time;});
+  var startIn=el('input',{type:'date',value:state.start}),daysIn=el('input',{type:'text',value:String(state.days),style:'width:70px',inputmode:'numeric'});
+  c1.appendChild(el('div',{class:'line'},[el('label',{text:'开始吃药的日期'}),startIn]));
+  c1.appendChild(el('div',{class:'line'},[el('label',{text:'疗程天数（26 周 = 182 天）'}),daysIn]));
+  c1.appendChild(el('button',{text:'保存设置',onclick:function(){
+    state.drugs.forEach(function(d){d.name=nameIn[d.id].value.trim()||d.name;d.time=timeIn[d.id].value||d.time;});
     if(startIn.value)state.start=startIn.value;
     var nn=parseInt(daysIn.value,10);if(nn>0&&nn<=730)state.days=nn;
-    touch(true);render();doSync();
+    _cons={};touch(true);render();doSync();
   }}));
+  box.appendChild(c1);
 
-  det.appendChild(hr());
-  det.appendChild(el('p',{class:'note',text:'0) 给团子起名字、音效'}));
-  var pnIn=el('input',{type:'text',value:state.pet.name||'团子',style:'width:120px'});
-  var sndCb=el('input',{type:'checkbox',onchange:function(e){lsSet(LS_SOUND,e.target.checked?'on':'off');}});
-  sndCb.checked=soundOn();
-  det.appendChild(el('div',{class:'line'},[pnIn,el('button',{class:'ghost small',text:'保存名字',onclick:function(){state.pet.name=pnIn.value.trim()||'团子';touch(true);render();doSync();}}),el('label',{},[sndCb,' 音效'])]));
-  det.appendChild(hr());
-  det.appendChild(el('p',{class:'note',text:'2) 把现在所在的位置存为常用地点（在家时存“家”，在 ACE 时存“ACE”）'}));
+  var c2=el('div',{class:'card'});
+  c2.appendChild(el('h2',{text:'常用地点'}));
+  c2.appendChild(el('p',{class:'note',text:'把现在所在的位置存为常用地点（在家时存“家”，在 ACE 时存“ACE”）。以后记录时会自动识别。'}));
   var plIn=el('input',{type:'text',placeholder:'地点名称',style:'width:140px'});
-  det.appendChild(el('div',{class:'line'},[plIn,el('button',{class:'ghost small',text:'存当前位置',onclick:async function(){
+  c2.appendChild(el('div',{class:'line'},[plIn,el('button',{class:'ghost small',text:'存当前位置',onclick:async function(){
     var nm=plIn.value.trim();if(!nm)return;
     busy='📍 正在定位…';render();
     try{
@@ -859,35 +931,42 @@ function render(){
     }catch(e){busy='⚠️ 没能定位，请检查浏览器的定位权限。';}
     render();
   }})]));
-  if(state.places.length)det.appendChild(el('div',{class:'note',text:'已存：'+state.places.map(function(p){return p.name;}).join('、')}));
+  if(busy)c2.appendChild(el('div',{class:'note',text:busy}));
+  if(state.places.length)c2.appendChild(el('div',{class:'note',text:'已存：'+state.places.map(function(p){return p.name;}).join('、')}));
+  box.appendChild(c2);
 
-  det.appendChild(hr());
-  det.appendChild(el('p',{class:'note',text:'3) 同步密钥（让记录保存到你的私有仓库，并让手机提醒知道你吃没吃）'}));
+  var c3=el('div',{class:'card'});
+  c3.appendChild(el('h2',{text:'同步密钥'}));
+  c3.appendChild(el('p',{class:'note',text:'让记录保存到你的私有仓库，并让手机提醒知道你吃没吃。'}));
   var tkIn=el('input',{type:'password',placeholder:token?'已设置（重新粘贴可替换）':'粘贴密钥',style:'flex:1;min-width:0'});
-  det.appendChild(el('div',{class:'line'},[tkIn,el('button',{class:'small',text:'保存密钥',onclick:function(){
-    var v=tkIn.value.trim();if(!v)return;
-    token=v;lsSet(LS_TOKEN,v);syncMsg='syncing';syncDetail='';render();doSync();
-  }})]));
-  det.appendChild(el('div',{class:'line'},[el('button',{class:'ghost small',text:'立即同步',onclick:function(){doSync();}})]));
-  var stTxt=msgs[syncMsg]||'还没有同步过';
+  c3.appendChild(el('div',{class:'line'},[tkIn,el('button',{class:'small',text:'保存密钥',onclick:function(){
+    var v=tkIn.value.trim();if(!v)return;token=v;lsSet(LS_TOKEN,v);syncMsg='syncing';syncDetail='';render();doSync();}})]));
+  c3.appendChild(el('div',{class:'line'},[el('button',{class:'ghost small',text:'立即同步',onclick:function(){doSync();}})]));
+  var stTxt=SYNCMSGS[syncMsg]||'还没有同步过';
   if(syncDetail&&syncMsg==='fail')stTxt+='（'+syncDetail+'。如果是 404，说明密钥没有选到 pill-data 仓库；如果是 403，说明权限不是 Read and write）';
-  det.appendChild(el('div',{class:syncMsg==='ok'?'done':'note',style:'margin-bottom:8px',text:'同步状态：'+stTxt}));
+  c3.appendChild(el('div',{class:syncMsg==='ok'?'done':'note',text:'同步状态：'+stTxt}));
+  box.appendChild(c3);
 
-  det.appendChild(hr());
+  var c4=el('div',{class:'card'});
+  c4.appendChild(el('h2',{text:'音效和导出'}));
+  var sndCb=el('input',{type:'checkbox',onchange:function(e){lsSet(LS_SOUND,e.target.checked?'on':'off');}});sndCb.checked=soundOn();
+  c4.appendChild(el('div',{class:'line'},[el('label',{},[sndCb,' 打开提示音'])]));
   var ta=el('textarea',{readonly:'readonly'});ta.value=csv();
-  det.appendChild(el('div',{class:'line'},[
+  c4.appendChild(el('div',{class:'line'},[
     el('button',{class:'ghost',text:'下载 CSV',onclick:function(){
-      try{
-        var b=new Blob(['﻿'+csv()],{type:'text/csv;charset=utf-8'});
-        var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='服药记录.csv';document.body.appendChild(a);a.click();a.remove();
-      }catch(e){ta.select();}
-    }}),
-    el('button',{class:'ghost',text:'复制全部记录',onclick:function(){
-      try{navigator.clipboard.writeText(csv()).catch(function(){ta.select();});}catch(e){ta.select();}
-    }})
+      try{var b=new Blob(['﻿'+csv()],{type:'text/csv;charset=utf-8'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='服药记录.csv';document.body.appendChild(a);a.click();a.remove();}catch(e){ta.select();}}}),
+    el('button',{class:'ghost',text:'复制全部记录',onclick:function(){try{navigator.clipboard.writeText(csv()).catch(function(){ta.select();});}catch(e){ta.select();}}})
   ]));
-  det.appendChild(ta);
-  app.appendChild(el('div',{class:'card'},[det]));
+  c4.appendChild(ta);
+  box.appendChild(c4);
+  return box;
+}
+
+function render(){
+  renderTabs();
+  app.innerHTML='';
+  var page=tab==='sky'?pageSky():tab==='log'?pageLog():tab==='set'?pageSet():pageToday();
+  app.appendChild(page);
   runFx();
 }
 
@@ -898,7 +977,7 @@ document.addEventListener('visibilitychange',function(){
 });
 setInterval(function(){
   var ae=document.activeElement;
-  if(selDate===today&&!document.hidden&&!(ae&&(ae.tagName==='INPUT'||ae.tagName==='SELECT')))render();
+  if(tab==='today'&&selDate===today&&!document.hidden&&!(ae&&(ae.tagName==='INPUT'||ae.tagName==='SELECT')))render();
 },60000);
 })();
 </script>
