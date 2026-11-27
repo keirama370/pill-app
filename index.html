@@ -76,6 +76,7 @@ var today=ymd(new Date());
 var selDate=today;
 var busy='';
 var syncMsg='';
+var syncDetail='';
 var syncing=false, syncAgain=false;
 var token=ls(LS_TOKEN)||'';
 var sha=ls(LS_SHA)||null;
@@ -116,16 +117,17 @@ function merge(a,b){
 }
 function same(a,b){return JSON.stringify(a)===JSON.stringify(b);}
 
+async function failText(r){var t='';try{var j=await r.json();t=j.message||'';}catch(e){}return 'http '+r.status+(t?' '+t:'');}
 async function doSync(){
   if(!token){syncMsg='no-token';return;}
   if(syncing){syncAgain=true;return;}
-  syncing=true;syncMsg='syncing';render();
+  syncing=true;syncMsg='syncing';syncDetail='';render();
   try{
     for(var attempt=0;attempt<3;attempt++){
       var r=await api('GET'),remote=null,rsha=null;
       if(r.status===401||r.status===403){throw new Error('auth');}
       if(r.status===404){remote=null;rsha=null;}
-      else if(!r.ok){throw new Error('http '+r.status);}
+      else if(!r.ok){throw new Error(await failText(r));}
       else{var j=await r.json();remote=JSON.parse(b64dec(j.content));rsha=j.sha;}
       var merged=merge(state,remote);
       var needPush=!remote||!same(merged,remote);
@@ -136,11 +138,11 @@ async function doSync(){
       var pr=await api('PUT',body);
       if(pr.status===409||pr.status===422){continue;}
       if(pr.status===401||pr.status===403){throw new Error('auth');}
-      if(!pr.ok){throw new Error('http '+pr.status);}
+      if(!pr.ok){throw new Error(await failText(pr));}
       var pj=await pr.json();sha=pj.content&&pj.content.sha;lsSet(LS_SHA,sha||'');syncMsg='ok';break;
     }
     if(syncMsg==='syncing')syncMsg='fail';
-  }catch(e){syncMsg=(e&&e.message==='auth')?'auth':'fail';}
+  }catch(e){syncMsg=(e&&e.message==='auth')?'auth':'fail';syncDetail=(e&&e.message)||'';}
   syncing=false;
   if(syncAgain){syncAgain=false;render();return doSync();}
   render();
@@ -378,9 +380,12 @@ function render(){
   var tkIn=el('input',{type:'password',placeholder:token?'已设置（重新粘贴可替换）':'粘贴密钥',style:'flex:1;min-width:0'});
   det.appendChild(el('div',{class:'line'},[tkIn,el('button',{class:'small',text:'保存密钥',onclick:function(){
     var v=tkIn.value.trim();if(!v)return;
-    token=v;lsSet(LS_TOKEN,v);sha=null;syncMsg='';doSync();
+    token=v;lsSet(LS_TOKEN,v);sha=null;syncMsg='syncing';syncDetail='';render();doSync();
   }})]));
   det.appendChild(el('div',{class:'line'},[el('button',{class:'ghost small',text:'立即同步',onclick:function(){doSync();}})]));
+  var stTxt=msgs[syncMsg]||'还没有同步过';
+  if(syncDetail&&syncMsg==='fail')stTxt+='（'+syncDetail+'。如果是 404，说明密钥没有选到 pill-data 仓库；如果是 403，说明权限不是 Read and write）';
+  det.appendChild(el('div',{class:syncMsg==='ok'?'done':'note',style:'margin-bottom:8px',text:'同步状态：'+stTxt}));
 
   det.appendChild(el('hr',{style:'border:0;border-top:1px solid var(--line);margin:14px 0'}));
   var ta=el('textarea',{readonly:'readonly'});ta.value=csv();
