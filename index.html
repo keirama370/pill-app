@@ -62,7 +62,7 @@ textarea{width:100%;height:150px;background:var(--bg);border:1px solid var(--lin
 .stage{padding:14px 14px 10px;position:relative;text-align:center}
 .bubble{background:#fff;color:#1c2430;border-radius:16px;padding:9px 12px;font-size:14px;line-height:1.4;margin:0 auto 6px;max-width:92%;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.08)}
 .bubble:after{content:"";position:absolute;left:50%;bottom:-7px;margin-left:-7px;border:7px solid transparent;border-top-color:#fff;border-bottom:0}
-.petbox{width:170px;height:162px;margin:8px auto 0;cursor:pointer;position:relative;-webkit-tap-highlight-color:transparent}
+.petbox{width:210px;height:200px;margin:8px auto 0;cursor:pointer;position:relative;-webkit-tap-highlight-color:transparent}
 .petbox svg{width:100%;height:100%;overflow:visible}
 .petbox .bodyg{transform-origin:100px 170px;animation:bob 2.6s ease-in-out infinite}
 .petbox.mood-happy .bodyg{animation:jump .9s ease-in-out infinite}
@@ -369,7 +369,7 @@ var LS_SOUND='pill.sound';
 var WEEK_EMOJI=['🍓','🍋','🍊','🍇','🍑','🍒','🥝','🍉','🍍','🥥','🌽','🥕','🍄','🌸','🌻','🌼','🌷','🍀','🌈','⭐','🌙','☀️','❄️','🔥','🍪','🏆'];
 var ORB_COL=['#ff8a80','#ffd180','#80d8ff','#b9f6ca'];
 var UNLOCKS=[
- {type:'color',id:'peach',label:'蜜桃粉',val:'#ffb8a8'},
+ {type:'head',id:'orange',label:'橙子',val:'🍊'},
  {type:'head',id:'bow',label:'蝴蝶结',val:'🎀'},
  {type:'neck',id:'scarf',label:'围巾',val:'🧣'},
  {type:'face',id:'shades',label:'墨镜',val:'🕶️'},
@@ -392,7 +392,7 @@ var UNLOCKS=[
  {type:'face',id:'goggles',label:'护目镜',val:'🥽'},
  {type:'color',id:'lilac',label:'薰衣草紫',val:'#d4c1f5'},
  {type:'scene',id:'forest',label:'森林',bg:'linear-gradient(#d3efc9,#f0fbea)'},
- {type:'head',id:'chick',label:'小鸡',val:'🐣'},
+ {type:'color',id:'peach',label:'蜜桃粉',val:'#ffb8a8'},
  {type:'neck',id:'medal',label:'奖牌',val:'🏅'},
  {type:'head',id:'star',label:'终点之星',val:'🌟'}
 ];
@@ -464,38 +464,52 @@ function petSay(){
   if(dayNo(today)>1&&dueDrugs(addDays(today,-1)).length&&!isFull(addDays(today,-1)))return YMISS;
   return pickDay(WAIT_EARLY,'e');
 }
-function petSvg(mood){
-  var eq=state.pet.equip||{};
-  var col='#ffd9a0',ci=itemById(eq.color);if(ci)col=ci.val;
-  var hi=itemById(eq.head),fi=itemById(eq.face),ni=itemById(eq.neck);
-  var eyes,mouth;
+function shade(hex,amt){
+  var n=parseInt(hex.slice(1),16),r=n>>16,g=(n>>8)&255,b=n&255;
+  function f(c){return Math.max(0,Math.min(255,Math.round(amt<0?c*(1+amt):c+(255-c)*amt)));}
+  return '#'+[f(r),f(g),f(b)].map(function(x){return ('0'+x.toString(16)).slice(-2);}).join('');
+}
+function capySvg(mood,col,hi,fi,ni){
+  var line=shade(col,-0.42),dark='#2d1f1a',lt=shade(col,0.3),back=shade(col,-0.12);
+  var eye,mouth;
   if(mood==='happy'){
-    eyes='<path d="M68 104 Q78 90 88 104" fill="none" stroke="#3b2f2f" stroke-width="5" stroke-linecap="round"/><path d="M112 104 Q122 90 132 104" fill="none" stroke="#3b2f2f" stroke-width="5" stroke-linecap="round"/>';
-    mouth='<path d="M82 120 Q100 144 118 120 Z" fill="#e57373" stroke="#3b2f2f" stroke-width="3" stroke-linejoin="round"/>';
+    eye='<path d="M142 99 Q150 87 158 99" fill="none" stroke="'+dark+'" stroke-width="5" stroke-linecap="round"/>';
+    mouth='<path d="M163 124 Q174 142 186 124 Z" fill="#e8737c" stroke="'+dark+'" stroke-width="3" stroke-linejoin="round"/>';
   }else if(mood==='sleepy'){
-    eyes='<path d="M68 102 H88" stroke="#3b2f2f" stroke-width="5" stroke-linecap="round"/><path d="M112 102 H132" stroke="#3b2f2f" stroke-width="5" stroke-linecap="round"/>';
-    mouth='<path d="M93 124 Q100 129 107 124" fill="none" stroke="#3b2f2f" stroke-width="4" stroke-linecap="round"/>';
+    eye='<path d="M143 96 H157" stroke="'+dark+'" stroke-width="5" stroke-linecap="round"/>';
+    mouth='<path d="M166 126 Q174 130 182 126" fill="none" stroke="'+dark+'" stroke-width="3.5" stroke-linecap="round"/>';
   }else if(mood==='miss'){
-    eyes='<circle cx="78" cy="100" r="7" fill="#3b2f2f"/><circle cx="122" cy="100" r="7" fill="#3b2f2f"/><circle cx="80" cy="97" r="2.4" fill="#fff"/><circle cx="124" cy="97" r="2.4" fill="#fff"/>';
-    mouth='<path d="M90 128 Q100 119 110 128" fill="none" stroke="#3b2f2f" stroke-width="4" stroke-linecap="round"/>';
+    eye='<ellipse cx="150" cy="95" rx="7" ry="8.5" fill="'+dark+'"/><circle cx="152.5" cy="91.5" r="3" fill="#fff"/><circle cx="147.5" cy="98.5" r="1.6" fill="#fff"/>';
+    mouth='<path d="M165 130 Q174 123 183 130" fill="none" stroke="'+dark+'" stroke-width="3.5" stroke-linecap="round"/>';
   }else{
-    eyes='<circle cx="78" cy="102" r="6" fill="#3b2f2f"/><circle cx="122" cy="102" r="6" fill="#3b2f2f"/>';
-    mouth='<path d="M88 122 Q100 134 112 122" fill="none" stroke="#3b2f2f" stroke-width="4" stroke-linecap="round"/>';
+    eye='<ellipse cx="150" cy="96" rx="5.5" ry="6.5" fill="'+dark+'"/><circle cx="152" cy="93.5" r="2.1" fill="#fff"/>';
+    mouth='<path d="M164 125 Q169 131 174 125 Q179 131 184 125" fill="none" stroke="'+dark+'" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>';
   }
   var acc='';
-  if(ni)acc+='<text x="100" y="166" font-size="38" text-anchor="middle">'+ni.val+'</text>';
-  if(fi)acc+='<text x="100" y="116" font-size="52" text-anchor="middle">'+fi.val+'</text>';
-  if(hi)acc+='<text x="100" y="52" font-size="52" text-anchor="middle">'+hi.val+'</text>';
+  if(ni)acc+='<text x="124" y="150" font-size="30" text-anchor="middle">'+ni.val+'</text>';
+  if(fi)acc+='<text x="150" y="108" font-size="52" text-anchor="middle">'+fi.val+'</text>';
+  if(hi)acc+='<text x="140" y="78" font-size="42" text-anchor="middle">'+hi.val+'</text>';
   return '<svg viewBox="0 0 200 190" aria-hidden="true">'+
-    '<ellipse cx="100" cy="180" rx="54" ry="8" fill="rgba(0,0,0,.14)"/>'+
+    '<ellipse cx="100" cy="184" rx="82" ry="6" fill="rgba(0,0,0,.14)"/>'+
     '<g class="bodyg">'+
-    '<ellipse cx="72" cy="172" rx="17" ry="9" fill="'+col+'" stroke="rgba(0,0,0,.18)" stroke-width="2"/>'+
-    '<ellipse cx="128" cy="172" rx="17" ry="9" fill="'+col+'" stroke="rgba(0,0,0,.18)" stroke-width="2"/>'+
-    '<path d="M100 40 C152 40 174 82 170 120 C167 152 142 170 100 170 C58 170 33 152 30 120 C26 82 48 40 100 40Z" fill="'+col+'" stroke="rgba(0,0,0,.18)" stroke-width="2"/>'+
-    '<ellipse cx="74" cy="66" rx="20" ry="11" fill="#fff" opacity=".35" transform="rotate(-25 74 66)"/>'+
-    eyes+
-    '<ellipse cx="58" cy="118" rx="11" ry="7" fill="#ff8fa3" opacity=".55"/><ellipse cx="142" cy="118" rx="11" ry="7" fill="#ff8fa3" opacity=".55"/>'+
-    mouth+acc+'</g></svg>';
+    '<ellipse cx="38" cy="177" rx="14" ry="8" fill="'+shade(col,-0.25)+'" stroke="'+line+'" stroke-width="3"/>'+
+    '<ellipse cx="74" cy="179" rx="14" ry="8" fill="'+shade(col,-0.25)+'" stroke="'+line+'" stroke-width="3"/>'+
+    '<ellipse cx="86" cy="130" rx="76" ry="48" fill="'+back+'" stroke="'+line+'" stroke-width="3"/>'+
+    '<ellipse cx="70" cy="104" rx="32" ry="10" fill="#fff" opacity=".18" transform="rotate(-10 70 104)"/>'+
+    '<ellipse cx="116" cy="178" rx="14" ry="8" fill="'+shade(col,-0.1)+'" stroke="'+line+'" stroke-width="3"/>'+
+    '<ellipse cx="150" cy="176" rx="14" ry="8" fill="'+shade(col,-0.1)+'" stroke="'+line+'" stroke-width="3"/>'+
+    '<ellipse cx="128" cy="82" rx="9" ry="6.5" fill="'+col+'" stroke="'+line+'" stroke-width="3" transform="rotate(-25 128 82)"/><ellipse cx="128" cy="83" rx="4.5" ry="3" fill="#f1ab9f" transform="rotate(-25 128 83)"/>'+
+    '<ellipse cx="146" cy="110" rx="36" ry="32" fill="'+col+'" stroke="'+line+'" stroke-width="3"/>'+
+    '<rect x="150" y="98" width="44" height="38" rx="17" fill="'+lt+'" stroke="'+line+'" stroke-width="3"/>'+
+    '<rect x="172" y="98" width="21" height="17" rx="8" fill="#4a2f25"/><ellipse cx="179" cy="102.5" rx="4.5" ry="2" fill="#fff" opacity=".45"/>'+
+    '<ellipse cx="134" cy="116" rx="8" ry="5.5" fill="#ff8fa3" opacity=".5"/>'+
+    eye+mouth+acc+'</g></svg>';
+}
+
+function petSvg(mood){
+  var eq=state.pet.equip||{};
+  var col='#b8865a',ci=itemById(eq.color);if(ci)col=ci.val;
+  return capySvg(mood,col,itemById(eq.head),itemById(eq.face),itemById(eq.neck));
 }
 function petCard(s,n,weeks){
   var xp=xpNow(),lv=levelOf(xp),pct=Math.round((xp%400)/400*100);
@@ -507,7 +521,7 @@ function petCard(s,n,weeks){
   var box=el('div',{class:'petbox mood-'+mood,onclick:function(){petTap=pick(TAP);buzz(15);render();}});
   box.innerHTML=petSvg(mood);
   if(mood==='happy'){
-    [['✨','4px','10px','0s'],['⭐','150px','20px','.5s'],['✨','160px','100px','1s'],['🌟','0px','90px','.3s']].forEach(function(a){
+    [['✨','6px','24px','0s'],['⭐','186px','30px','.5s'],['✨','196px','110px','1s'],['🌟','0px','100px','.3s']].forEach(function(a){
       var sp=el('span',{class:'sp',text:a[0],style:'left:'+a[1]+';top:'+a[2]+';animation-delay:'+a[3]});box.appendChild(sp);});
   }
   if(mood==='sleepy')box.appendChild(el('span',{class:'zz',text:'💤'}));
